@@ -5,9 +5,14 @@
         <md-content class="md-padding">
           <p>
           <div class="tab-content">
-            <p>{{content.description}}</p>
-            <p>Адрес: {{content.address}}</p>
-            <p>Время работы: {{content.work_time}}</p>
+            <div ng-if="dataLoading">
+              Загрузка...
+            </div>
+            <div ng-if="!dataLoading">
+              <p>{{content.description}}</p>
+              <p>Адрес: {{content.address}}</p>
+              <p>Время работы: {{content.work_time}}</p>
+            </div>
           </div>
           </p>
         </md-content>

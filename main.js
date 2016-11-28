@@ -30,8 +30,27 @@ myApp.controller("menuCtrl", [
   '$scope',
   '$http',
   'placesFactory',
-  function($scope, $http, placesFactory) {
-    $scope.content = placesFactory.get();
+  '$interval',
+  function($scope, $http, placesFactory, $interval) {
+    var stop;
+    $scope.dataLoading = true;
+
+    function setContent() {
+      var content = placesFactory.get();
+      if (content.length != 0) {
+        $scope.dataLoading = false;
+        $scope.content = content;
+
+        if (stop != undefined) {
+          $interval.cancel(stop);
+          stop = undefined;
+        }
+      }
+    }
+
+    setContent();
+    stop = $interval(setContent, 200);
+
   }]);
 
 myApp.controller("placeCtrl", [
@@ -39,9 +58,25 @@ myApp.controller("placeCtrl", [
   '$http',
   '$routeParams',
   'placesFactory',
-  function($scope, $http, $routeParams, placesFactory) {
-    var tmp_content = placesFactory.get_by_id($routeParams.id);
-    $scope.content = tmp_content;
+  '$interval',
+  function($scope, $http, $routeParams, placesFactory, $interval) {
+    var stop;
+    $scope.dataLoading = true;
+
+    function setContent() {
+      var content = placesFactory.get_by_id($routeParams.id);
+      if (content != undefined) {
+        $scope.content = content;
+        $scope.dataLoading = false;
+
+        if (stop != undefined) {
+          $interval.cancel(stop);
+          stop = undefined;
+        }
+      }
+    }
+    var stop = $interval(setContent, 2000);
+
   }]);
 
 
@@ -65,6 +100,7 @@ myApp.factory('placesFactory',[
           return savedData[i];
         }
       }
+      return undefined;
     }
 
     function init(callback) {
