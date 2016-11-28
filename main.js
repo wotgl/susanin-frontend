@@ -1,4 +1,5 @@
 var baseURL = 'https://thisisfine.tk:10241/api/v1';
+var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');
 logo.onclick = function() {
@@ -49,7 +50,7 @@ myApp.controller("menuCtrl", [
     }
 
     setContent();
-    stop = $interval(setContent, 200);
+    stop = $interval(setContent, TIMEOUT);
 
   }]);
 
@@ -75,7 +76,9 @@ myApp.controller("placeCtrl", [
         }
       }
     }
-    var stop = $interval(setContent, 2000);
+
+    setContent();
+    var stop = $interval(setContent, TIMEOUT);
 
   }]);
 
