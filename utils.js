@@ -53,7 +53,9 @@ function drawPlaces(places) {
   }
 
   for (var i in colors) {
-    var markers = L.markerClusterGroup({maxClusterRadius: 25});
+    var markers = L.markerClusterGroup({
+      maxClusterRadius: 25
+    });
     for (var j in colors[i]) {
       var place = colors[i][j];
 
@@ -63,7 +65,9 @@ function drawPlaces(places) {
 
         iconSize: [25, 25],
       });
-      var marker = L.marker(new L.LatLng(place.lat, place.lon), {icon: greenIcon});
+      var marker = L.marker(new L.LatLng(place.lat, place.lon), {
+        icon: greenIcon
+      });
 
       (function(place) {
         marker.on('click', function(e) {

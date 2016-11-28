@@ -14,15 +14,13 @@ logo.onclick = function() {
 var myApp = angular.module('menuApp', ['ngRoute', 'ngMaterial']);
 
 myApp.config(function($routeProvider) {
-  $routeProvider.when("/menu",
-    {
-      templateUrl: "menu.html",
-      controller: "menuCtrl"
-    }).when("/place/:id",
-    {
-      templateUrl: "place.html",
-      controller: "placeCtrl"
-    });
+  $routeProvider.when("/menu", {
+    templateUrl: "menu.html",
+    controller: "menuCtrl"
+  }).when("/place/:id", {
+    templateUrl: "place.html",
+    controller: "placeCtrl"
+  });
 });
 
 
@@ -52,7 +50,8 @@ myApp.controller("menuCtrl", [
     setContent();
     stop = $interval(setContent, TIMEOUT);
 
-  }]);
+  }
+]);
 
 myApp.controller("placeCtrl", [
   '$scope',
@@ -80,11 +79,12 @@ myApp.controller("placeCtrl", [
     setContent();
     var stop = $interval(setContent, TIMEOUT);
 
-  }]);
+  }
+]);
 
 
 // ================Factories================
-myApp.factory('placesFactory',[
+myApp.factory('placesFactory', [
   '$http',
   function($http) {
     var savedData = [];
@@ -112,20 +112,23 @@ myApp.factory('placesFactory',[
 
     function fetchPlaces(callback) {
       var url = baseURL + '/places/';
-      $http.post(url, {places: 'all'})
-      .then(function(result) {
-        savedData = result.data.data;
-        callback(result.data.data);
-      });
+      $http.post(url, {
+          places: 'all'
+        })
+        .then(function(result) {
+          savedData = result.data.data;
+          callback(result.data.data);
+        });
     }
 
     return {
-    set: set,
-    get: get,
-    init: init,
-    get_by_id: get_by_id
-   }
- }]);
+      set: set,
+      get: get,
+      init: init,
+      get_by_id: get_by_id
+    }
+  }
+]);
 
 
 // ================Init================
@@ -148,7 +151,11 @@ var spb = {
   'lon': 30.30291080474854
 };
 var map = L.map(
-    'map', {"keyboardZoomOffset": .05, maxZoom: 20, "scrollWheelZoom": false});
+  'map', {
+    "keyboardZoomOffset": .05,
+    maxZoom: 20,
+    "scrollWheelZoom": false
+  });
 
 map.setView([spb['lat'], spb['lon']], 12);
 
