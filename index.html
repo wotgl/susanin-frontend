@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!-- Angular Material style sheet -->
+    <link href="./lib/ajax/libs/angularjs/1.1.0/angular-material.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+
+    <!-- Mapzen -->
+    <link rel="stylesheet" href="./lib/mapzen/mapzen.css">
+    <script src="./lib/mapzen/mapzen.min.js"></script>
+    <script src="./lib/mapzen/tangram/tangram.min.js"></script>
+    <!-- /Mapzen -->
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="./lib/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="./lib/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="./lib/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="./lib/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="./lib/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+    <!-- /Angular -->
+
+    <!-- Leaflet -->
+    <script src="./lib/leaflet/leaflet.markercluster-src.js"></script>
+    <link href="./lib/leaflet/MarkerCluster.css" rel="stylesheet">
+    <!-- /Leaflet -->
+
+    <title>Сусанин</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="container">
+      <!-- Mapzen -->
+      <div id="map">
+      </div>
+      <!-- /Mapzen -->
+
+      <!-- App -->
+      <div id="app" ng-app="menuApp" ng-cloak>
+        <ng-view></ng-view>
+      </div>
+      <!-- /App -->
+
+      <!-- Logo -->
+      <div id="susanin_logo">
+        <img src="./img/face.png" style="width:100%" id="open-menu-button">
+      </div>
+      <!-- /Logo -->
+    </div>
+
+    <script src="./lib/ajax/libs/angularjs/1.1.0/angular-material.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="./lib/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <!-- Your application bootstrap  -->
+    <script src="./main.js"></script>
+    <script src="./utils.js"></script>
+    <canvas id="myCanvas" width="26" height="26"></canvas>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+﻿# Author @patriciogv - 2015
+
+cameras:
+    camera1:
+        type: isometric
+
+lights:
+    light1:
+        type: directional
+        direction: [0, 1, -.5]
+        diffuse: .5
+        ambient: .3
+    light2:
+        type: point
+        position: [0, -500px, 500px]
+        origin: ground
+        diffuse: .5
+        ambient: .3
+
+scene:
+    background:
+        color: '#30383a'
+
+styles:
+    tiling-texture-zoom-fade:
+        mix: space-tile
+        shaders:
+            blocks:
+                global: |
+                    // Tile a texture across zoom by fading between them
+                    // ================================
+                    vec4 TileTexture (sampler2D tex, float scale) {
+                        vec2 IN = getTileCoords()*scale;
+                        vec2 OUT = getTileCoords()*scale*2.;
+                        return mix(texture2D(tex,fract(IN)), texture2D(tex,fract(OUT)), fract(u_map_position.z));
+                    }
+    paper:
+        base: polygons
+        texcoords: true
+        material:
+            normal:
+                texture: images/normal-0031.jpg
+                mapping: planar
+                scale: 0.001
+            ambient: 1.
+            diffuse: 1.
+    tools:
+        shaders:
+            blocks: 
+                global: |
+                    // Coord System
+    ink-lines:
+        base: lines
+        mix: tools
+        texcoords: true
+        lighting: false
+sources:
+    osm:
+        type: TopoJSON
+        url:  //vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-JUsa0Gc
+
+layers:
+    earth:
+        data: { source: osm }
+        draw:
+            paper:
+                order: 1
+                color: '#20282b'
+                width: 8
+    # landuse:
+    #     data: { source: osm }
+    #     draw:
+    #         ink-lines:
+    #             order: 3
+    #             color: '#30383b'
+    #             width: 8
+    water:
+        data: { source: osm }
+        draw:
+            paper:
+                order: 2
+                color: '#979a9c'
+    roads:
+        data: { source: osm }
+        filter: { kind: [highway, major_road] }
+        properties: { width: 1111 }
+        draw:
+            ink-lines:
+                order: 3
+                color: '#979a9c'
+                width: 30
+    # buildings:
+    #     data: { source: osm }
+    #     draw:
+    #         paper:
+    #             order: 3
+    #             color: '#30383a'
+    # places:
+    #     data: { source: osm }
+    #     filter: { name: true }
+    #     draw:
+    #         text:
+    #             font:
+    #                 family: 'PT Sans'
+    #                 size: 20px
+    #                 style: italic
+    #                 fill: white
+    #                 stroke: { color: black , width: 1 }
+    # landuse_labels:
+    #     data: { source: osm }
+    #     filter: { name: true, kind: park, $zoom: { min: 16 } }
+    #     draw:
+    #         text:
+    #             font:
+    #                 family: 'PT Sans'
+    #                 size: 18px
+    #                 style: italic
+    #                 fill: white
+    #                 stroke: { color: black , width: 1 }

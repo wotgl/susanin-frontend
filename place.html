@@ -1,0 +1,22 @@
+<div ng-cloak >
+  <md-content>
+    <md-tabs md-center-tabs md-border-bottom>
+      <md-tab label="{{content.name}}">
+        <md-content class="md-padding">
+          <p>
+          <div class="tab-content">
+            <p>{{content.description}}</p>
+            <p>Адрес: {{content.address}}</p>
+            <p>Время работы: {{content.work_time}}</p>
+          </div>
+          </p>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+    <div class="buttons-area">
+      <a class="waves-effect waves-light btn" style="float:left">На карте</a>
+      <a class="waves-effect waves-light btn" style="float:right">Сюда</a>
+
+    </div>
+  </md-content>
+</div>
