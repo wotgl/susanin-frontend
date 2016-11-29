@@ -5,7 +5,7 @@ var spb = {
 var map = L.map(
   'map', {
     "keyboardZoomOffset": .05,
-    maxZoom: 20,
+    maxZoom: 15,
     zoomControl:false,
     "scrollWheelZoom": true
 });
