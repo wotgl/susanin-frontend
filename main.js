@@ -30,9 +30,14 @@ myApp.controller("menuCtrl", [
   '$http',
   'placesFactory',
   '$interval',
-  function($scope, $http, placesFactory, $interval) {
+  '$location',
+  function($scope, $http, placesFactory, $interval, $location) {
     var stop;
     $scope.dataLoading = true;
+
+    $scope.$getPlace = function(place_id) {
+      $location.path('/place/' + place_id + '/');
+    };
 
     function setContent() {
       var content = placesFactory.get();
@@ -64,7 +69,6 @@ myApp.controller("placeCtrl", [
     $scope.dataLoading = true;
 
     $scope.$back = function() {
-      console.log(1);
       window.history.back();
     };
 
