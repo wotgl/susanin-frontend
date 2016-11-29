@@ -63,6 +63,11 @@ myApp.controller("placeCtrl", [
     var stop;
     $scope.dataLoading = true;
 
+    $scope.$back = function() {
+      console.log(1);
+      window.history.back();
+    };
+
     function setContent() {
       var content = placesFactory.get_by_id($routeParams.id);
       if (content != undefined) {
@@ -81,7 +86,6 @@ myApp.controller("placeCtrl", [
 
   }
 ]);
-
 
 // ================Factories================
 myApp.factory('placesFactory', [
@@ -154,6 +158,7 @@ var map = L.map(
   'map', {
     "keyboardZoomOffset": .05,
     maxZoom: 20,
+    zoomControl:false,
     "scrollWheelZoom": false
   });
 

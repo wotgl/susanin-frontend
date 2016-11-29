@@ -1,10 +1,21 @@
-<div ng-cloak>
-  <md-content>
-    <md-tabs md-center-tabs md-border-bottom>
-      <md-tab label="{{content.name}}">
-        <md-content class="md-padding">
-          <p>
-            <div class="tab-content">
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button aria-label="Go Back" ng-click="$back()">
+      Назад
+    </md-button>
+    <span flex></span>
+  </div>
+</md-toolbar>
+<md-content class="md-padding">
+  <div class="tab-content">
+    <md-content>
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">
+              {{content.name}}
+            </span>
+            <span class="md-subhead">
               <div ng-if="dataLoading">
                 Загрузка...
               </div>
@@ -13,15 +24,15 @@
                 <p>Адрес: {{content.address}}</p>
                 <p>Время работы: {{content.work_time}}</p>
               </div>
-            </div>
-          </p>
-        </md-content>
-      </md-tab>
-    </md-tabs>
-    <div class="buttons-area">
-      <a class="waves-effect waves-light btn" style="float:left">На карте</a>
-      <a class="waves-effect waves-light btn" style="float:right">Сюда</a>
+            </span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Сюда</md-button>
+          <md-button>На карте</md-button>
+        </md-card-actions>
+      </md-card>
 
-    </div>
-  </md-content>
-</div>
+    </md-content>
+  </div>
+</md-content>
