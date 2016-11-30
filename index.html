@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+
     <!-- Angular Material style sheet -->
     <link href="./lib/ajax/libs/angularjs/1.1.0/angular-material.min.css" rel="stylesheet">
     <link href="./style.css" rel="stylesheet">
@@ -25,12 +27,6 @@
     <link href="./lib/leaflet/MarkerCluster.css" rel="stylesheet">
     <!-- /Leaflet -->
 
-    <!-- Search -->
-    <link rel="stylesheet" type="text/css" href="lib/search/css/component.css" />
-    <script src="lib/search/js/classie.js"></script>
-    <script src="lib/search/js/uisearch.js"></script>
-    <!-- /Search -->
-
     <title>Сусанин</title>
     <meta charset="utf-8">
   </head>
@@ -40,16 +36,6 @@
       <div id="map">
       </div>
       <!-- /Mapzen -->
-
-      <!-- Search -->
-      <!-- <div id="sb-search" class="sb-search" style="position:fixed; top:20px; right:20px; z-index:1000;">
-        <form>
-          <input class="sb-search-input" placeholder="Какое место?" type="search" value="" name="search" id="search">
-          <input class="sb-search-submit" onclick="searchSubmit()" type="submit" value="">
-          <span class="sb-icon-search"></span>
-        </form>
-      </div> -->
-      <!-- /Search -->
 
       <!-- App -->
       <div id="app" ng-app="menuApp" ng-cloak>

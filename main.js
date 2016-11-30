@@ -156,24 +156,3 @@ myApp.directive('placeItem', function() {
     templateUrl: '/templates/placeItem.html'
   };
 });
-
-
-// =================Mapzen=================
-// var spb = {
-//   'lat': 59.93562345638782,
-//   'lon': 30.30291080474854
-// };
-// var map = L.map(
-//   'map', {
-//     "keyboardZoomOffset": .05,
-//     maxZoom: 20,
-//     zoomControl:false,
-//     "scrollWheelZoom": false
-//   });
-//
-// map.setView([spb['lat'], spb['lon']], 12);
-//
-// var layer = Tangram.leafletLayer({
-//   scene: "lib/susanin/styles/crosshatch.yaml",
-// });
-// layer.addTo(map);

@@ -1,3 +1,7 @@
+* {
+    font-family: 'PT Sans', sans-serif;
+}
+
 .tabsdemoDynamicHeight md-content {
     background-color: transparent !important;
 }
