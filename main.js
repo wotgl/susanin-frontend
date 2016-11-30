@@ -73,8 +73,14 @@ myApp.controller("placeCtrl", [
       window.history.back();
     };
 
-    $scope.goToPlace = function(lat, lon) {
-      goToPlace(lat, lon);
+    $scope.showPlace = function(lat, lon) {
+      showPlace(lat, lon);
+      document.location.hash = '/';
+    };
+
+    $scope.routeToPlace = function(lat, lon) {
+      routeToPlace(lat, lon);
+      document.location.hash = '/';
     };
 
     function setContent() {
@@ -96,6 +102,25 @@ myApp.controller("placeCtrl", [
   }
 ]);
 
+myApp.controller('AppCtrl', function($scope) {
+  $scope.clearValue = function() {
+    $scope.data = undefined;
+  };
+  $scope.data = {};
+  $scope.save = function() {
+    if ($scope.myForm.$valid) {
+      console.log($scope.data);
+    } else {
+      alert('Form was invalid!');
+    }
+  };
+  $scope.users = [
+    { id: 1, name: 'Bob' },
+    { id: 2, name: 'Alice' },
+    { id: 3, name: 'Steve' }
+  ];
+  $scope.selectedUser = { id: 1, name: 'Bob' };
+});
 // ================Factories================
 myApp.factory('placesFactory', [
   '$http',

@@ -41,7 +41,6 @@ function createCircle(text, color) {
 }
 
 function drawPlaces(places) {
-  console.log("drawPlaces");
   var colors = {};
 
   for (var i in places) {

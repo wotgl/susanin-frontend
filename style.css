@@ -149,5 +149,9 @@ img {
 }
 
 #search {
-  top: -20px;
+    top: -20px;
+}
+
+.leaflet-control-container .leaflet-routing-container-hide {
+    display: none;
 }

@@ -20,7 +20,7 @@ map.setView([spb['lat'], spb['lon']], 12);
 layer.addTo(map);
 
 var placeMarker, userMarker;
-var userLocation;
+var userLocation, routeControl;
 
 // Init
 function init() {
@@ -38,10 +38,44 @@ init();
 
 
 // Map API functions
-function goToPlace(lat, lon) {
+function showPlace(lat, lon) {
   map.setView([lat, lon], 15);
   addPlaceMarker(lat, lon);
-  document.location.hash = '/';
+}
+
+function routeToPlace(lat, lon) {
+  if (routeControl) {
+    // routeControl.removeFrom(map);
+    map.removeControl(routeControl);
+  }
+  routeControl = L.Routing.control({
+    waypoints: [
+      L.latLng(userLocation[0], userLocation[1]),
+      L.latLng(lat, lon)
+    ],
+    router: L.Routing.mapzen('mapzen-SHRFnGA', {costing:'pedestrian'}),
+    show: false,
+    language: 'ru',
+    routeWhileDragging: true,
+    createMarker: function() { return L.marker([lat, lon]); },
+  });
+  map.addControl(routeControl);
+  // routeControl.addTo(map);
+  // prevRouteOrMarker = L.Routing.control({
+  //   waypoints: [
+  //       L.latLng(userLocation[0], userLocation[1]),
+  //       L.latLng(lat, lon)
+  //   ],
+  //   lineOptions: {
+  //       styles: [ {color: 'white',opacity: 0.8, weight: 12},
+  //                 {color: '#e67e22', opacity: 1, weight: 6}
+  //   ]},
+  //   router: L.Routing.mapzen('mapzen-SHRFnGA', {costing:'pedestrian'}),
+  //   formatter: new L.Routing.mapzenFormatter(),
+  //   summaryTemplate:'<div class="start">{name}</div><div class="info {costing}">{distance}, {time}</div>',
+  //   routeWhileDragging: false
+  // })
+  // prevRouteOrMarker.addTo(map);
 }
 
 function addPlaceMarker(lat, lon) {
