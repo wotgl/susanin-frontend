@@ -43,11 +43,18 @@ function showPlace(lat, lon) {
   addPlaceMarker(lat, lon);
 }
 
-function routeToPlace(lat, lon) {
+function deleteMarkers() {
   if (routeControl) {
-    // routeControl.removeFrom(map);
     map.removeControl(routeControl);
   }
+  if (placeMarker) {
+    placeMarker.removeFrom(map);
+  }
+}
+
+function routeToPlace(lat, lon) {
+  deleteMarkers();
+
   routeControl = L.Routing.control({
     waypoints: [
       L.latLng(userLocation[0], userLocation[1]),
@@ -60,28 +67,11 @@ function routeToPlace(lat, lon) {
     createMarker: function() { return L.marker([lat, lon]); },
   });
   map.addControl(routeControl);
-  // routeControl.addTo(map);
-  // prevRouteOrMarker = L.Routing.control({
-  //   waypoints: [
-  //       L.latLng(userLocation[0], userLocation[1]),
-  //       L.latLng(lat, lon)
-  //   ],
-  //   lineOptions: {
-  //       styles: [ {color: 'white',opacity: 0.8, weight: 12},
-  //                 {color: '#e67e22', opacity: 1, weight: 6}
-  //   ]},
-  //   router: L.Routing.mapzen('mapzen-SHRFnGA', {costing:'pedestrian'}),
-  //   formatter: new L.Routing.mapzenFormatter(),
-  //   summaryTemplate:'<div class="start">{name}</div><div class="info {costing}">{distance}, {time}</div>',
-  //   routeWhileDragging: false
-  // })
-  // prevRouteOrMarker.addTo(map);
 }
 
 function addPlaceMarker(lat, lon) {
-  if (placeMarker) {
-    placeMarker.removeFrom(map);
-  }
+  deleteMarkers();
+
   placeMarker = L.marker([lat, lon]);
   placeMarker.addTo(map);
 }
@@ -102,5 +92,4 @@ function addUserMarker(lat, lon) {
 
   userMarker.addTo(map);
   userMarker.bindPopup("Вы здесь").openPopup();
-  // userMarker.bindPopup("Museum of New Zealand.").openPopup();
 }

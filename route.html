@@ -1,0 +1,42 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+      <md-button ng-controller="mainCtrl" aria-label="Go Back" ng-click="$back()">
+        Назад
+      </md-button>
+    <span flex></span>
+  </div>
+</md-toolbar>
+<md-content class="md-padding">
+  <div class="tab-content">
+      <md-list flex>
+        <md-list-item class="md-2-line" ng-repeat="item in content">
+          <div class="md-list-item-text" layout="column">
+          <md-card md-theme-watch>
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">
+                  {{item}}
+                </span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <span class="md-subhead">
+                <div ng-if="dataLoading">
+                  Загрузка...
+                </div>
+                <div ng-if="!dataLoading">
+                  <p>{{item}}</p>
+                  <p>Адрес: {{item}}</p>
+                  <p>Время работы: {{item}}</p>
+                </div>
+              </span>
+            </md-card-content>
+          </md-card>
+        </div>
+        </md-list-item>
+      </md-list>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="routeToPlace(content.lat, content.lon)"><h3>Иду!</h3></md-button>
+      </md-card-actions>
+  </div>
+</md-content>

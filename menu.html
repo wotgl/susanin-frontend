@@ -1,15 +1,15 @@
 <div flex>
   <md-content >
-    <md-tabs md-center-tabs md-border-bottom md-dynamic-height>
+    <md-tabs md-center-tabs md-border-bottom md-dynamic-height md-selected=1>
 
       <md-tab label="Места">
         <md-content class="md-padding">
           <div class="tab-content">
             <md-list flex>
-              <div ng-if="dataLoading">
+              <div ng-if="placesLoading">
                 Загрузка...
               </div>
-              <md-list-item class="md-2-line" ng-repeat="item in content" ng-click="$getPlace(item.id)">
+              <md-list-item class="md-2-line" ng-repeat="item in placesContent" ng-click="$getPlace(item.id)">
                 <div class="md-list-item-text" layout="column">
                   <h3>{{ item.name }}</h3>
                 </div>
@@ -22,34 +22,45 @@
       <md-tab label="Маршруты">
         <md-content class="md-padding">
           <div class="tab-content">
-            <div ng-controller="AppCtrl" ng-cloak layout="column" layout-align="center center">
+            <div ng-controller="menuCtrl" ng-cloak layout="column" layout-align="center center">
             <span class="md-headline">Экспресс Петербург</span>
-            <form name="myForm">
-              <p>
-                Выберите время и тип заведения
-              </p>
 
-              <md-slider-container>
-                <span>Время</span>
-                <md-slider flex min="1" max="12" ng-model="data.time" aria-label="red" id="red-slider">
-                </md-slider>
-                <md-input-container>
-                  <input flex type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider">
-                </md-input-container>
-              </md-slider-container>
+            <div ng-hide="previousRoute">
+              <form name="myForm">
+                <p>
+                  Выберите время и тип заведения
+                </p>
 
-              <div layout="column" layout-align="start">
-                <md-checkbox ng-model="data.type.bar">Бар</md-checkbox>
-                <md-checkbox ng-model="data.type.restaurant">Ресторан</md-checkbox>
-                <md-checkbox ng-model="data.type.park">Парк</md-checkbox>
-                <md-checkbox ng-model="data.type.fastfood">Перекусить</md-checkbox>
-              </div>
+                <md-slider-container>
+                  <span>Время</span>
+                  <md-slider flex min="1" max="12" ng-model="data.time" aria-label="red" id="red-slider">
+                  </md-slider>
+                  <md-input-container>
+                    <input flex type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider">
+                  </md-input-container>
+                </md-slider-container>
 
+                <div layout="column" layout-align="start">
+                  <md-checkbox ng-model="data.type.bar">Бар</md-checkbox>
+                  <md-checkbox ng-model="data.type.restaurant">Ресторан</md-checkbox>
+                  <md-checkbox ng-model="data.type.park">Парк</md-checkbox>
+                  <md-checkbox ng-model="data.type.fastfood">Перекусить</md-checkbox>
+                </div>
+
+                <div ng-controller="assembleRouteCtrl" layout="row" layout-align="end" flex>
+                  <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Clear</md-button>
+                  <md-button ng-click="save()" class="md-primary">Save</md-button>
+                </div>
+              </form>
+            </div>
+
+            <div  ng-show="previousRoute">
               <div layout="row" layout-align="end" flex>
-                <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Clear</md-button>
-                <md-button ng-click="save()" class="md-primary">Save</md-button>
+                <md-button ng-click="startPreviousRoute()" class="md-primary">Продолжить</md-button>
+                <md-button ng-click="startNewRoute()" class="md-primary">Новый маршрут</md-button>
               </div>
-            </form>
+            </div>
+
           </div>
           </div>
         </md-content>
@@ -59,9 +70,12 @@
         <md-content class="md-padding">
           <div class="tab-content">
             <md-list flex>
-              <md-list-item class="md-2-line" ng-repeat="item in [1, 2, 3]" ng-click="null">
+              <div ng-if="expertsLoading">
+                Загрузка...
+              </div>
+              <md-list-item class="md-2-line" ng-repeat="item in expertsContent" ng-click="$getPlace(item.id)">
                 <div class="md-list-item-text" layout="column">
-                  <h3>{{ item }}</h3>
+                  <h3>{{ item.expert }}</h3>
                 </div>
               </md-list-item>
             </md-list>
