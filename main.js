@@ -174,6 +174,7 @@ myApp.controller('assembleRouteCtrl', [
     $scope.data = {};
     $scope.save = function() {
       if ($scope.myForm.$valid) {
+        console.log($scope.data);
         routeFactory.init($scope.data);
         document.location.hash = '/route';
       } else {

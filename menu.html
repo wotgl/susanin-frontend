@@ -3,13 +3,21 @@
     <md-tabs md-center-tabs md-border-bottom md-dynamic-height md-selected=1>
 
       <md-tab label="Места">
+        <label class="md-padding">
+          <!-- <md-input-container> -->
+            <label>Поиск</label>
+            <input ng-model="search.name">
+          <!-- </md-input-container> -->
+          <!-- <input ng-model="search.name" style="margin-left: 20px;"> -->
+        </label>
         <md-content class="md-padding">
           <div class="tab-content">
             <md-list flex>
               <div ng-if="placesLoading">
                 Загрузка...
               </div>
-              <md-list-item class="md-2-line" ng-repeat="item in placesContent" ng-click="$getPlace(item.id)">
+
+              <md-list-item class="md-2-line" ng-repeat="item in placesContent | filter:search:strict" ng-click="$getPlace(item.id)">
                 <div class="md-list-item-text" layout="column">
                   <h3>{{ item.name }}</h3>
                 </div>
@@ -26,7 +34,7 @@
             <span class="md-headline">Экспресс Петербург</span>
 
             <div ng-hide="previousRoute">
-              <form name="myForm">
+              <form ng-controller="assembleRouteCtrl" name="myForm">
                 <p>
                   Выберите время и тип заведения
                 </p>
@@ -47,7 +55,11 @@
                   <md-checkbox ng-model="data.type.fastfood">Перекусить</md-checkbox>
                 </div>
 
-                <div ng-controller="assembleRouteCtrl" layout="row" layout-align="end" flex>
+                <md-switch ng-model="data.nearby" aria-label="Switch 1">
+                  Рядом
+                </md-switch>
+
+                <div layout="row" layout-align="end" flex>
                   <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Clear</md-button>
                   <md-button ng-click="save()" class="md-primary">Save</md-button>
                 </div>
