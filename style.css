@@ -129,6 +129,9 @@ img {
     max-width: 100%;
     width: 100%;
 }
+#open-menu-button {
+  background-color: #ee8208;
+}
 
 .carddemoBasicUsage .card-media {
     background-color: #999999;
