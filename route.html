@@ -13,10 +13,13 @@
           <div class="md-list-item-text" layout="column">
           <md-card md-theme-watch>
             <md-card-title>
-              <md-card-title-text>
+              <md-card-title-text style="display: inline;">
                 <span class="md-headline">
-                  {{item}}
+                  {{item.name}}
                 </span>
+                <md-button ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
+                  Посетил
+                </md-button>
               </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -25,18 +28,22 @@
                   Загрузка...
                 </div>
                 <div ng-if="!dataLoading">
-                  <p>{{item}}</p>
-                  <p>Адрес: {{item}}</p>
-                  <p>Время работы: {{item}}</p>
+                  <p>{{item.description}}</p>
+                  <!-- <p>Адрес: {{item.address}}</p>
+                  <p>Время работы: {{item.work_time}}</p> -->
                 </div>
               </span>
+              <md-card-actions ng-controller="placeCtrl" layout="row" layout-align="end center">
+                <md-button ng-click="routeToPlace(item.lat, item.lon)">Сюда</md-button>
+                <md-button ng-click="showPlace(item.lat, item.lon)">На карте</md-button>
+              </md-card-actions>
             </md-card-content>
           </md-card>
         </div>
         </md-list-item>
       </md-list>
-      <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="routeToPlace(content.lat, content.lon)"><h3>Иду!</h3></md-button>
+      <md-card-actions layout="row" layout-align="end center" ng-show="userChoice">
+        <md-button ng-click="setRoute()"><h3>Иду!</h3></md-button>
       </md-card-actions>
   </div>
 </md-content>

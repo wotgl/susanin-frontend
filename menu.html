@@ -2,6 +2,7 @@
   <md-content >
     <md-tabs md-center-tabs md-border-bottom md-dynamic-height md-selected=1>
 
+      <!-- <md-tab md-on-select="onTabChanges(0)" label="Места"> -->
       <md-tab label="Места">
         <label class="md-padding">
           <!-- <md-input-container> -->
@@ -27,6 +28,7 @@
         </md-content>
       </md-tab>
 
+      <!-- <md-tab md-on-select="onTabChanges(1)" label="Маршруты"> -->
       <md-tab label="Маршруты">
         <md-content class="md-padding">
           <div class="tab-content">
@@ -41,10 +43,10 @@
 
                 <md-slider-container>
                   <span>Время</span>
-                  <md-slider flex min="1" max="12" ng-model="data.time" aria-label="red" id="red-slider">
+                  <md-slider flex min="1" max="8" ng-model="data.time" aria-label="red" id="red-slider">
                   </md-slider>
                   <md-input-container>
-                    <input flex type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider">
+                    <input flex ng-init="data.time = 1" type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider" required>
                   </md-input-container>
                 </md-slider-container>
 
@@ -55,13 +57,13 @@
                   <md-checkbox ng-model="data.type.fastfood">Перекусить</md-checkbox>
                 </div>
 
-                <md-switch ng-model="data.nearby" aria-label="Switch 1">
+                <md-switch ng-init="data.nearby = false" ng-model="data.nearby" aria-label="Switch 1">
                   Рядом
                 </md-switch>
 
                 <div layout="row" layout-align="end" flex>
-                  <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Clear</md-button>
-                  <md-button ng-click="save()" class="md-primary">Save</md-button>
+                  <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Очистить</md-button>
+                  <md-button ng-click="save()" class="md-primary">Старт</md-button>
                 </div>
               </form>
             </div>
@@ -78,6 +80,7 @@
         </md-content>
       </md-tab>
 
+      <!-- <md-tab md-on-select="onTabChanges(2)" label="Эксперты"> -->
       <md-tab label="Эксперты">
         <md-content class="md-padding">
           <div class="tab-content">
@@ -85,7 +88,7 @@
               <div ng-if="expertsLoading">
                 Загрузка...
               </div>
-              <md-list-item class="md-2-line" ng-repeat="item in expertsContent" ng-click="$getPlace(item.id)">
+              <md-list-item class="md-2-line" ng-repeat="item in expertsContent" ng-click="$expertRoute(item.id)">
                 <div class="md-list-item-text" layout="column">
                   <h3>{{ item.expert }}</h3>
                 </div>

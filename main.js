@@ -15,13 +15,16 @@ logo.onclick = function() {
 var myApp = angular.module('menuApp', ['ngRoute', 'ngMaterial']);
 
 myApp.config(function($routeProvider) {
-  $routeProvider.when("/menu", {
+  $routeProvider.when("/menu/:page", {
+    templateUrl: "menu.html",
+    controller: "menuCtrl"
+  }).when("/menu/", {
     templateUrl: "menu.html",
     controller: "menuCtrl"
   }).when("/place/:id", {
     templateUrl: "place.html",
     controller: "placeCtrl"
-  }).when("/route", {
+  }).when("/route/:view", {
     templateUrl: "route.html",
     controller: "routeCtrl"
   });
@@ -36,7 +39,8 @@ myApp.controller("menuCtrl", [
   'routeFactory',
   '$interval',
   '$location',
-  function($scope, $http, placesFactory, expertsFactory, routeFactory, $interval, $location) {
+  '$routeParams',
+  function($scope, $http, placesFactory, expertsFactory, routeFactory, $interval, $location, $routeParams) {
     var stopPlaces, stopExperts;
     $scope.placesLoading = true;
     $scope.expertsLoading = true;
@@ -44,6 +48,28 @@ myApp.controller("menuCtrl", [
 
     $scope.$getPlace = function(place_id) {
       $location.path('/place/' + place_id + '/');
+    };
+
+    // $scope.onTabChanges = function(md_selected) {
+    //   if ($routeParams.page == md_selected) {
+    //     return;
+    //   }
+    //   $location.path('/menu/' + md_selected + '/');
+    // };
+
+    $scope.$expertRoute = function(expert_id) {
+      var routes = expertsFactory.get_route_by_expert_id(expert_id);
+      routeFactory.set_preview(routes);
+      $location.path('/route/preview/');
+    };
+
+    $scope.startPreviousRoute = function() {
+      document.location.hash = '/route/view/';
+    };
+
+    $scope.startNewRoute = function() {
+      $scope.previousRoute = false;
+      routeFactory.del();
     };
 
     // Places here
@@ -78,19 +104,17 @@ myApp.controller("menuCtrl", [
     setExpertsContent();
     stopExperts = $interval(setExpertsContent, TIMEOUT);
 
-    $scope.startPreviousRoute = function() {
-      document.location.hash = '/route';
-    };
-
-    $scope.startNewRoute = function() {
-      $scope.previousRoute = false;
-    };
 
     // Check previous route
     if (Object.keys(routeFactory.get()).length != 0) {
       $scope.previousRoute = true;
     }
 
+    // if (!$routeParams.page) {
+    //   $scope.pageId = 1;
+    // } else {
+    //   $scope.pageId = $routeParams.page;
+    // }
   }
 ]);
 
@@ -145,9 +169,34 @@ myApp.controller("routeCtrl", [
   '$interval',
   function($scope, $http, $routeParams, routeFactory, $interval) {
     $scope.dataLoading = true;
+    $scope.userChoice = false;
+
+    $scope.setRoute = function() {
+      var previewRoute = routeFactory.get_preview();
+      routeFactory.set(previewRoute);
+      document.location.hash = '/menu/';
+    };
+
+    $scope.checkedPlace = function(placeId) {
+      var delIndex;
+      for (i = 0; i < $scope.content.length; i++) {
+        if ($scope.content[i].id == placeId) {
+          delIndex = i;
+          break;
+        }
+      }
+      $scope.content.splice(delIndex, 1);
+    };
 
     function setContent() {
-      var content = routeFactory.get();
+      var content;
+      if ($routeParams.view == 'preview') {
+        content = routeFactory.get_preview();
+        $scope.userChoice = true;
+      } else {
+        content = routeFactory.get();
+        $scope.userChoice = false;
+      }
       if (content.length != 0) {
         $scope.dataLoading = false;
         $scope.content = content;
@@ -176,9 +225,7 @@ myApp.controller('assembleRouteCtrl', [
       if ($scope.myForm.$valid) {
         console.log($scope.data);
         routeFactory.init($scope.data);
-        document.location.hash = '/route';
-      } else {
-        alert('Form was invalid!');
+        document.location.hash = '/route/view/';
       }
     };
   }
@@ -253,10 +300,10 @@ myApp.factory('expertsFactory', [
       return savedData;
     }
 
-    function get_by_id(id) {
+    function get_route_by_expert_id(id) {
       for (i = 0; i < savedData.length; i++) {
         if (savedData[i].id == id) {
-          return savedData[i];
+          return savedData[i].places;
         }
       }
       return undefined;
@@ -280,7 +327,7 @@ myApp.factory('expertsFactory', [
       set: set,
       get: get,
       init: init,
-      get_by_id: get_by_id
+      get_route_by_expert_id: get_route_by_expert_id
     }
   }
 ]);
@@ -288,11 +335,12 @@ myApp.factory('expertsFactory', [
 myApp.factory('routeFactory', [
   '$http',
   function($http) {
-    var init_data = {};
+    var initData = {};
     var route = {};
+    var routePreview = {};
 
     function init(data) {
-      init_data = data;
+      initData = data;
       fetchRoute();
     }
 
@@ -300,14 +348,27 @@ myApp.factory('routeFactory', [
       return route;
     }
 
+    function set(data) {
+      route = data;
+    }
+
+    function get_preview() {
+      return routePreview;
+    }
+
+    function set_preview(data) {
+      routePreview = data;
+    }
+
     function del() {
       route = {};
     }
 
     function fetchRoute() {
-      var url = baseURL_route + '/route/';
+      var url = baseURL_route + '/get_route/';
       $http.post(url, {
-          places: 'all'
+          userLocation: {'lat': userLocation[0], 'lon': userLocation[1]},
+          data: initData
         })
         .then(function(result) {
           route = result.data;
@@ -317,7 +378,10 @@ myApp.factory('routeFactory', [
     return {
       get: get,
       init: init,
-      del: del
+      del: del,
+      set: set,
+      get_preview: get_preview,
+      set_preview: set_preview,
     }
   }
 ]);
