@@ -1,5 +1,5 @@
 var baseURL = 'https://thisisfine.tk:10241/api/v1';
-var baseURL_route = 'http://127.0.0.1:5000'
+var baseURL_route = 'http://127.0.0.1/api'
 var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');
@@ -178,6 +178,23 @@ myApp.controller("routeCtrl", [
     };
 
     $scope.checkedPlace = function(placeId) {
+      var delIndex;
+      for (i = 0; i < $scope.content.length; i++) {
+        if ($scope.content[i].id == placeId) {
+          delIndex = i;
+          break;
+        }
+      }
+      $scope.content.splice(delIndex, 1);
+      var url = baseURL_route + '/check_in/';
+      $http.post(url, {
+          placeId: placeId
+        })
+        .then(function(result) {
+        });
+    };
+
+    $scope.deletePlace = function(placeId) {
       var delIndex;
       for (i = 0; i < $scope.content.length; i++) {
         if ($scope.content[i].id == placeId) {
@@ -387,7 +404,11 @@ myApp.factory('routeFactory', [
 ]);
 
 // ================Init================
-myApp.run(['placesFactory', 'expertsFactory', function(placesFactory, expertsFactory) {
+myApp.run(['placesFactory', 'expertsFactory', '$http', function(placesFactory, expertsFactory, $http) {
+  var url = baseURL_route + '/init/';
+  $http.post(url)
+    .then(function(result) {
+    });
   placesFactory.init(drawPlaces);
   expertsFactory.init();
 }]);
