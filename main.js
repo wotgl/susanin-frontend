@@ -1,5 +1,6 @@
 var baseURL = 'https://thisisfine.tk:10241/api/v1';
-var baseURL_route = 'http://127.0.0.1/api'
+var baseURL_route = 'http://127.0.0.1/api';
+baseURL_route = 'http://192.168.1.64/api';
 var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');
@@ -12,9 +13,10 @@ logo.onclick = function() {
   }
 }
 
+
 var myApp = angular.module('menuApp', ['ngRoute', 'ngMaterial']);
 
-myApp.config(function($routeProvider) {
+myApp.config(function($routeProvider, $mdGestureProvider) {
   $routeProvider.when("/menu/:page", {
     templateUrl: "menu.html",
     controller: "menuCtrl"
@@ -28,7 +30,10 @@ myApp.config(function($routeProvider) {
     templateUrl: "route.html",
     controller: "routeCtrl"
   });
+  $mdGestureProvider.skipClickHijack();
 });
+
+
 
 // ================Controllers================
 myApp.controller("menuCtrl", [
@@ -190,8 +195,7 @@ myApp.controller("routeCtrl", [
       $http.post(url, {
           placeId: placeId
         })
-        .then(function(result) {
-        });
+        .then(function(result) {});
     };
 
     $scope.deletePlace = function(placeId) {
@@ -384,7 +388,10 @@ myApp.factory('routeFactory', [
     function fetchRoute() {
       var url = baseURL_route + '/get_route/';
       $http.post(url, {
-          userLocation: {'lat': userLocation[0], 'lon': userLocation[1]},
+          userLocation: {
+            'lat': userLocation[0],
+            'lon': userLocation[1]
+          },
           data: initData
         })
         .then(function(result) {
@@ -403,12 +410,12 @@ myApp.factory('routeFactory', [
   }
 ]);
 
+
 // ================Init================
 myApp.run(['placesFactory', 'expertsFactory', '$http', function(placesFactory, expertsFactory, $http) {
   var url = baseURL_route + '/init/';
   $http.post(url)
-    .then(function(result) {
-    });
+    .then(function(result) {});
   placesFactory.init(drawPlaces);
   expertsFactory.init();
 }]);
