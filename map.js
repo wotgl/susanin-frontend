@@ -104,5 +104,4 @@ function addUserMarker(lat, lon) {
   });
 
   userMarker.addTo(map);
-  userMarker.bindPopup("Вы здесь").openPopup();
 }

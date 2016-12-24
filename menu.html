@@ -1,9 +1,9 @@
 <div flex>
   <md-content >
-    <md-tabs md-center-tabs md-border-bottom md-dynamic-height md-selected=1>
+    <md-tabs md-center-tabs md-border-bottom md-dynamic-height md-selected="selectedIndex">
 
       <!-- <md-tab md-on-select="onTabChanges(0)" label="Места"> -->
-      <md-tab label="Места">
+      <md-tab label="Места" md-on-select="onTabSelected(0)">
         <label class="md-padding">
           <!-- <md-input-container> -->
             <label>Поиск</label>
@@ -29,7 +29,7 @@
       </md-tab>
 
       <!-- <md-tab md-on-select="onTabChanges(1)" label="Маршруты"> -->
-      <md-tab label="Маршруты">
+      <md-tab label="Маршруты"  md-on-select="onTabSelected(1)">
         <md-content class="md-padding">
           <div class="tab-content">
             <div ng-controller="menuCtrl" ng-cloak layout="column" layout-align="center center">

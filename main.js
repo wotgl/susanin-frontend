@@ -38,6 +38,7 @@ myApp.config(function($routeProvider, $mdGestureProvider) {
 // ================Controllers================
 myApp.controller("menuCtrl", [
   '$scope',
+  '$rootScope',
   '$http',
   'placesFactory',
   'expertsFactory',
@@ -45,22 +46,27 @@ myApp.controller("menuCtrl", [
   '$interval',
   '$location',
   '$routeParams',
-  function($scope, $http, placesFactory, expertsFactory, routeFactory, $interval, $location, $routeParams) {
+  function($scope, $rootScope, $http, placesFactory, expertsFactory, routeFactory, $interval, $location, $routeParams) {
     var stopPlaces, stopExperts;
     $scope.placesLoading = true;
     $scope.expertsLoading = true;
     $scope.previousRoute = false;
+    $scope.selectedIndex = 1;
 
     $scope.$getPlace = function(place_id) {
       $location.path('/place/' + place_id + '/');
     };
 
-    // $scope.onTabChanges = function(md_selected) {
-    //   if ($routeParams.page == md_selected) {
-    //     return;
-    //   }
-    //   $location.path('/menu/' + md_selected + '/');
-    // };
+    console.log("AAAA");
+
+    $scope.onTabSelected = function(md_selected) {
+      $rootScope.md_selected = md_selected;
+    };
+
+    if ($rootScope.md_selected != undefined) {
+      $scope.selectedIndex = $rootScope.md_selected;
+      $rootScope.md_selected = undefined;
+    }
 
     $scope.$expertRoute = function(expert_id) {
       var routes = expertsFactory.get_route_by_expert_id(expert_id);
