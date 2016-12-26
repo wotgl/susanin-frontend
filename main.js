@@ -13,7 +13,6 @@ logo.onclick = function() {
   }
 }
 
-
 var myApp = angular.module('menuApp', ['ngRoute', 'ngMaterial']);
 
 myApp.config(function($routeProvider, $mdGestureProvider) {
@@ -260,7 +259,8 @@ myApp.controller('assembleRouteCtrl', [
 
 myApp.controller('mainCtrl', [
   '$scope',
-  function($scope) {
+  '$document',
+  function($scope, $document) {
     $scope.$back = function() {
       window.history.back();
     };

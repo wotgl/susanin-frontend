@@ -23,6 +23,14 @@ layer.addTo(map);
 var placeMarker, userMarker;
 var userLocation, routeControl;
 
+// Show map on click
+map.on('click', function(e) {
+  var path = document.location.hash;
+  if (path != '#/' && path != "") {
+    document.location.hash = '/';
+  }
+});
+
 // Init
 function init() {
   var _locations = [
