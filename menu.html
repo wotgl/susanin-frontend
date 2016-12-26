@@ -38,23 +38,28 @@
             <div ng-hide="previousRoute">
               <form ng-controller="assembleRouteCtrl" name="myForm">
                 <p>
-                  Выберите время и тип заведения
+                  Выберите количество времени и тип заведения
                 </p>
 
                 <md-slider-container>
                   <span>Время</span>
-                  <md-slider flex min="1" max="8" ng-model="data.time" aria-label="red" id="red-slider">
+                  <md-slider md-discrete flex min="1" max="8" ng-model="data.time" aria-label="red" id="red-slider">
                   </md-slider>
-                  <md-input-container>
-                    <input flex ng-init="data.time = 1" type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider" required>
+                  <md-input-container class="md-input-has-placeholder">
+                    <!-- <input flex ng-init="data.time = 1" type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider" required> -->
+                    ч.
                   </md-input-container>
                 </md-slider-container>
 
-                <div layout="column" layout-align="start">
-                  <md-checkbox ng-model="data.type.bar">Бар</md-checkbox>
-                  <md-checkbox ng-model="data.type.restaurant">Ресторан</md-checkbox>
-                  <md-checkbox ng-model="data.type.park">Парк</md-checkbox>
-                  <md-checkbox ng-model="data.type.fastfood">Перекусить</md-checkbox>
+                <div layout="row" layout-align="space-around">
+                  <div layout="column" layout-align="center">
+                    <md-checkbox ng-model="data.type.bar">Выпить</md-checkbox>
+                    <md-checkbox ng-model="data.type.park">Погулять</md-checkbox>
+                  </div>
+                  <div layout="column" layout-align="center">
+                    <md-checkbox ng-model="data.type.restaurant">Поесть</md-checkbox>
+                    <md-checkbox ng-model="data.type.fastfood">Товары</md-checkbox>
+                  </div>
                 </div>
 
                 <md-switch ng-init="data.nearby = false" ng-model="data.nearby" aria-label="Switch 1">

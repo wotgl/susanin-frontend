@@ -5,10 +5,13 @@ var spb = {
   'lat': 59.93562345638782,
   'lon': 30.30291080474854
 };
+var spb_locations = [59.783808, 29.736831, 60.104248, 30.621194];
+
 var map = L.map(
   'map', {
     "keyboardZoomOffset": .05,
     maxZoom: 15,
+    minZoom: 11,
     zoomControl: false,
     "scrollWheelZoom": true,
     'tap': false,
@@ -16,9 +19,8 @@ var map = L.map(
 var layer = Tangram.leafletLayer({
   scene: "lib/susanin/styles/crosshatch.yaml",
 });
-
-map.setView([spb['lat'], spb['lon']], 12);
 layer.addTo(map);
+
 
 var placeMarker, userMarker;
 var userLocation, routeControl;
@@ -46,8 +48,43 @@ function init() {
   ]
   userLocation = _locations[Math.floor(Math.random() * _locations.length)];
   console.log(userLocation);
-  addUserMarker(userLocation[0], userLocation[1])
+  addUserMarker(userLocation[0], userLocation[1]);
 
+  // Boundary of map
+  map.setMaxBounds([
+    [spb_locations[0], spb_locations[1]],
+    [spb_locations[2], spb_locations[3]]
+  ]);
+  map.setView([spb['lat'], spb['lon']], 12.5);
+
+  function identifyGeo() {
+    function geoDisable() {
+      alert('geoDisable');
+    }
+
+    function notSaintPeterburg() {
+      alert('notSaintPeterburg');
+    }
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+
+        // in SPb
+        if (position.coords.latitude > spb_locations[0] && position.coords.latitude < spb_locations[2] && position.coords.longitude > spb_locations[1] && position.coords.longitude < spb_locations[3]) {
+
+          addUserMarker(position.coords.latitude, position.coords.longitude);
+          navigator.geolocation.watchPosition(function(position) {
+            addUserMarker(position.coords.latitude, position.coords.longitude);
+          });
+        } else {
+          notSaintPeterburg();
+        }
+      }, geoDisable);
+    } else {
+      geoDisable();
+    }
+  }
+
+  // identifyGeo();   // DEBUG
 }
 init();
 
