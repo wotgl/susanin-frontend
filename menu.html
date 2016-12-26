@@ -4,13 +4,13 @@
 
       <!-- <md-tab md-on-select="onTabChanges(0)" label="Места"> -->
       <md-tab label="Места" md-on-select="onTabSelected(0)">
-        <label class="md-padding">
-          <!-- <md-input-container> -->
+        <!-- <label class="md-padding"> -->
+        <md-input-container class="md-block search-place" flex-gt-sm>
             <label>Поиск</label>
             <input ng-model="search.name">
-          <!-- </md-input-container> -->
+          </md-input-container>
           <!-- <input ng-model="search.name" style="margin-left: 20px;"> -->
-        </label>
+        <!-- </label> -->
         <md-content class="md-padding">
           <div class="tab-content">
             <md-list flex>

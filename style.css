@@ -158,3 +158,8 @@ img {
 .leaflet-control-container .leaflet-routing-container-hide {
     display: none;
 }
+
+
+.search-place {
+    height: 0px;
+}
