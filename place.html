@@ -13,6 +13,7 @@
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">
+              <i class="material-icons md-dark md-inactive place-color" ng-style="{color: content.colorCode }">fiber_manual_record</i>
               {{content.name}}
             </span>
             <span class="md-subhead">
@@ -22,17 +23,18 @@
               <div ng-if="!dataLoading">
                 <p>{{content.description}}</p>
                 <p>Адрес: {{content.address}}</p>
-                <p>Время работы: {{content.work_time}}</p>
+                <p>Время работы: {{content.work_time}}</p>         
               </div>
             </span>
           </md-card-title-text>
         </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button ng-click="routeToPlace(content.lat, content.lon)">Сюда</md-button>
-          <md-button ng-click="showPlace(content.lat, content.lon)">На карте</md-button>
-        </md-card-actions>
       </md-card>
-
     </md-content>
   </div>
+</md-content>
+<md-content>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-click="routeToPlace(content.lat, content.lon)">Сюда</md-button>
+    <md-button ng-click="showPlace(content.lat, content.lon)">На карте</md-button>
+  </md-card-actions>
 </md-content>

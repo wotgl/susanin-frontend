@@ -18,9 +18,12 @@
                 Загрузка...
               </div>
 
-              <md-list-item class="md-2-line" ng-repeat="item in placesContent | filter:search:strict" ng-click="$getPlace(item.id)">
+              <md-list-item class="md-2-line" ng-repeat="item in placesContent | filter:search:strict | orderBy: 'colorCode'" ng-click="$getPlace(item.id)">
                 <div class="md-list-item-text" layout="column">
-                  <h3>{{ item.name }}</h3>
+                  <h3>
+                    <i class="material-icons md-dark md-inactive place-color" ng-style="{color: item.colorCode }">fiber_manual_record</i>
+                    {{ item.name }}
+                  </h3>
                 </div>
               </md-list-item>
             </md-list>
@@ -46,7 +49,6 @@
                   <md-slider md-discrete flex min="1" max="8" ng-model="data.time" aria-label="red" id="red-slider">
                   </md-slider>
                   <md-input-container class="md-input-has-placeholder">
-                    <!-- <input flex ng-init="data.time = 1" type="number" ng-model="data.time" aria-label="red" aria-controls="red-slider" required> -->
                     ч.
                   </md-input-container>
                 </md-slider-container>
@@ -62,10 +64,15 @@
                   </div>
                 </div>
 
-                <md-switch ng-init="data.nearby = false" ng-model="data.nearby" aria-label="Switch 1">
-                  Рядом
-                </md-switch>
-
+                <div layout="row" layout-align="space-around" flex>
+                  <md-switch ng-init="data.nearby = false" ng-model="data.nearby" aria-label="Switch_1">
+                    Рядом
+                  </md-switch>
+                  <md-switch ng-init="data.night = false" ng-model="data.night" aria-label="Switch_2">
+                    Ночь
+                  </md-switch>
+                </div>
+                
                 <div layout="row" layout-align="end" flex>
                   <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Очистить</md-button>
                   <md-button ng-click="save()" class="md-primary">Старт</md-button>
@@ -73,7 +80,7 @@
               </form>
             </div>
 
-            <div  ng-show="previousRoute">
+            <div ng-show="previousRoute">
               <div layout="row" layout-align="end" flex>
                 <md-button ng-click="startPreviousRoute()" class="md-primary">Продолжить</md-button>
                 <md-button ng-click="startNewRoute()" class="md-primary">Новый маршрут</md-button>

@@ -184,7 +184,7 @@ myApp.controller("routeCtrl", [
     $scope.setRoute = function() {
       var previewRoute = routeFactory.get_preview();
       routeFactory.set(previewRoute);
-      document.location.hash = '/menu/';
+      document.location.hash = '/route/view/';
     };
 
     $scope.checkedPlace = function(placeId) {
@@ -248,8 +248,9 @@ myApp.controller('assembleRouteCtrl', [
     };
     $scope.data = {};
     $scope.save = function() {
+      // console.log($scope.myForm);
       if ($scope.myForm.$valid) {
-        console.log($scope.data);
+        // console.log($scope.data);
         routeFactory.init($scope.data);
         document.location.hash = '/route/view/';
       }

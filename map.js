@@ -65,7 +65,7 @@ function init() {
     function notSaintPeterburg() {
       alert('notSaintPeterburg');
     }
-    if ("geolocation" in navigator) {
+    if ("geolocation" in navigator && 1 == 0) {
       navigator.geolocation.getCurrentPosition(function(position) {
 
         // in SPb

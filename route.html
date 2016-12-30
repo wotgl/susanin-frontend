@@ -15,14 +15,9 @@
             <md-card-title>
               <md-card-title-text style="display: inline;">
                 <span class="md-headline">
+                  <i class="material-icons md-dark md-inactive place-color" ng-style="{color: item.colorCode }">fiber_manual_record</i>
                   {{item.name}}
-                </span>
-                <md-button ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
-                  Посетил
-                </md-button>
-                <md-button ng-controller="routeCtrl" ng-click="deletePlace(item.id)" ng-hide="userChoice">
-                  Удалить
-                </md-button>
+                </span>                
               </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -36,17 +31,33 @@
                   <p>Время работы: {{item.work_time}}</p> -->
                 </div>
               </span>
+
+              <!-- Maps buttons -->
               <md-card-actions ng-controller="placeCtrl" layout="row" layout-align="end center">
                 <md-button ng-click="routeToPlace(item.lat, item.lon)">Сюда</md-button>
                 <md-button ng-click="showPlace(item.lat, item.lon)">На карте</md-button>
               </md-card-actions>
+
+              <hr ng-hide="userChoice">
+              <!-- Like or not buttons -->
+              <div layout="row" layout-align="space-around" ng-hide="userChoice">
+                <md-button class="md-icon-button" ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
+                  <i class="material-icons" style="color: green">done</i>
+                </md-button>
+                <md-button class="md-icon-button" ng-controller="routeCtrl" ng-click="deletePlace(item.id)" ng-hide="userChoice">
+                  <i class="material-icons" style="color: red">clear</i>
+                </md-button>
+              </div>
+
             </md-card-content>
           </md-card>
         </div>
         </md-list-item>
       </md-list>
-      <md-card-actions layout="row" layout-align="end center" ng-show="userChoice">
-        <md-button ng-click="setRoute()"><h3>Иду!</h3></md-button>
-      </md-card-actions>
   </div>
+</md-content>
+<md-content>
+  <md-card-actions layout="row" layout-align="end center" ng-show="userChoice">
+    <md-button ng-click="setRoute()">Иду!</md-button>
+  </md-card-actions>
 </md-content>

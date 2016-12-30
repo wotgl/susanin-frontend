@@ -48,7 +48,7 @@ body {
         z-index: 100500;
     }
     div.tab-content {
-        max-height: 60vh;
+        max-height: 55vh;
     }
 }
 
@@ -80,8 +80,8 @@ body {
 }
 #susanin_logo {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 10px;
+    right: 10px;
     z-index: 1000;
     width: 80px;
 }
@@ -162,4 +162,8 @@ img {
 
 .search-place {
     height: 0px;
+}
+
+.place-color {
+    font-size: 14px !important;
 }
