@@ -96,6 +96,15 @@ body {
     z-index: 1000;
     width: 80px;
 }
+
+#route_logo {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000;
+    width: 80px;   
+}
+
 /* Leaflet Cluster*/
 
 .marker-cluster-small {
@@ -141,7 +150,11 @@ img {
     width: 100%;
 }
 #open-menu-button {
-  background-color: #ee8208;
+    background-color: #ee8208;
+}
+
+#open-route-button {
+    background-color: rgb(255,64,129);
 }
 
 .carddemoBasicUsage .card-media {

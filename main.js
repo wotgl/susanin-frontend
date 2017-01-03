@@ -13,6 +13,11 @@ logo.onclick = function() {
   }
 }
 
+var logo_route = document.getElementById('route_logo');
+logo_route.onclick = function() {
+  document.location.hash = '/route/view/';
+}
+
 var myApp = angular.module('menuApp', ['ngRoute', 'ngMaterial']);
 
 myApp.config(function($routeProvider, $mdGestureProvider) {
@@ -25,6 +30,9 @@ myApp.config(function($routeProvider, $mdGestureProvider) {
   }).when("/place/:id", {
     templateUrl: "place.html",
     controller: "placeCtrl"
+  }).when("/expert/:id", {
+    templateUrl: "expert.html",
+    controller: "expertCtrl"
   }).when("/route/:view", {
     templateUrl: "route.html",
     controller: "routeCtrl"
@@ -56,16 +64,24 @@ myApp.controller("menuCtrl", [
       $location.path('/place/' + place_id + '/');
     };
 
-    console.log("AAAA");
+    $scope.$getExpert = function(expert_id) {
+      $location.path('/expert/' + expert_id + '/');
+    };
+
+    console.log("menuCtrl");
 
     $scope.onTabSelected = function(md_selected) {
       $rootScope.md_selected = md_selected;
     };
 
-    if ($rootScope.md_selected != undefined) {
+    if ($rootScope.md_selected != undefined && $location.path() == "/menu/") {
       $scope.selectedIndex = $rootScope.md_selected;
       $rootScope.md_selected = undefined;
     }
+
+    $scope.$on('event_expertRoute', function(event, arg) {
+      $scope.$expertRoute(arg);
+    });
 
     $scope.$expertRoute = function(expert_id) {
       var routes = expertsFactory.get_route_by_expert_id(expert_id);
@@ -79,6 +95,7 @@ myApp.controller("menuCtrl", [
 
     $scope.startNewRoute = function() {
       $scope.previousRoute = false;
+      logo_route.style.display = "none";
       routeFactory.del();
     };
 
@@ -123,6 +140,7 @@ myApp.controller("menuCtrl", [
     // Check previous route
     if (Object.keys(routeFactory.get()).length != 0) {
       $scope.previousRoute = true;
+      logo_route.style.display = "block";
     }
 
     // if (!$routeParams.page) {
@@ -142,10 +160,6 @@ myApp.controller("placeCtrl", [
   function($scope, $http, $routeParams, placesFactory, $interval) {
     var stop;
     $scope.dataLoading = true;
-
-    $scope.$back = function() {
-      window.history.back();
-    };
 
     $scope.showPlace = function(lat, lon) {
       showPlace(lat, lon);
@@ -172,6 +186,42 @@ myApp.controller("placeCtrl", [
 
     setContent();
     var stop = $interval(setContent, TIMEOUT);
+
+  }
+]);
+
+myApp.controller("expertCtrl", [
+  '$scope',
+  '$rootScope',
+  '$http',
+  '$routeParams',
+  'expertsFactory',
+  '$interval',
+  function($scope, $rootScope, $http, $routeParams, expertsFactory, $interval) {
+    var stop;
+    $scope.dataLoading = true;
+
+
+
+    function setContent() {
+      var content = expertsFactory.get_by_id($routeParams.id);
+      if (content != undefined) {
+        $scope.content = content;
+        $scope.dataLoading = false;
+
+        if (stop != undefined) {
+          $interval.cancel(stop);
+          stop = undefined;
+        }
+      }
+    }
+
+    $scope.$goToExpertsRoute = function(expert_id) {
+      $rootScope.$broadcast('event_expertRoute', expert_id);
+    }
+
+    setContent();
+    stop = $interval(setContent, TIMEOUT);
 
   }
 ]);
@@ -369,6 +419,15 @@ myApp.factory('expertsFactory', [
       return undefined;
     }
 
+    function get_by_id(id) {
+      for (i = 0; i < savedData.length; i++) {
+        if (savedData[i].id == id) {
+          return savedData[i];
+        }
+      }
+      return undefined;
+    }
+
     function init() {
       fetchPlaces();
     }
@@ -387,6 +446,7 @@ myApp.factory('expertsFactory', [
       set: set,
       get: get,
       init: init,
+      get_by_id: get_by_id,
       get_route_by_expert_id: get_route_by_expert_id
     }
   }

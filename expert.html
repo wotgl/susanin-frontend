@@ -1,0 +1,41 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button ng-controller="mainCtrl" aria-label="Go Back" ng-click="$back()">
+      Назад
+    </md-button>
+    <span flex></span>
+  </div>
+</md-toolbar>
+<md-content class="md-padding">
+  <div class="tab-content">
+    <md-content>
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">
+              {{content.expert}}
+            </span>
+            <span class="md-subhead">
+              <div ng-if="dataLoading">
+                Загрузка...
+              </div>
+              <div ng-if="!dataLoading">
+                <p>{{content.story}}</p>
+                <!-- <p>Адрес: {{content.address}}</p> -->
+                <!-- <p>Время работы: {{content.work_time}}</p>          -->
+              </div>
+            </span>
+          </md-card-title-text>
+        </md-card-title>
+      </md-card>
+    </md-content>
+  </div>
+</md-content>
+<md-content>
+  <md-card-actions layout="row" layout-align="center" class="control-place-buttons">
+    <md-button class="md-button md-accent" aria-label="Settings" ng-click="$goToExpertsRoute(content.id)">
+      <b>ИЗБРАННЫЙ МАРШРУТ</b>
+    </md-button>
+  </md-card-actions>
+  <div ng-controller="menuCtrl"></div>
+</md-content>
