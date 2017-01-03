@@ -65,7 +65,7 @@ function init() {
     function notSaintPeterburg() {
       alert('notSaintPeterburg');
     }
-    if ("geolocation" in navigator && 1 == 0) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
 
         // in SPb
@@ -123,6 +123,47 @@ function routeToPlace(lat, lon) {
     },
   });
   map.addControl(routeControl);
+}
+
+var AAA;
+var BBB;
+var routeLine;
+
+function routeDirection(places) {
+  deleteMarkers();
+
+  var waypoints = [];
+  waypoints.push(L.latLng(userLocation[0], userLocation[1]));
+  for (var i = 0; i < places.length; i++) {
+    waypoints.push(L.latLng(places[i].lat, places[i].lon));
+  }
+
+  var plan = new L.Routing.Plan(waypoints);
+
+  routeControl = L.Routing.control({
+    waypoints: waypoints,
+    router: L.Routing.mapzen('mapzen-SHRFnGA', {
+      costing: 'pedestrian'
+    }),
+    show: false,
+    language: 'ru',
+    routeWhileDragging: true,
+    plan: plan,
+    routeLine: function(route) {
+      routeLine = route;
+
+      var line = L.Routing.line(route);
+      return line;
+    }
+  });
+
+  AAA = routeControl;
+
+  map.addControl(routeControl);
+}
+
+function getRouteLine() {
+  return routeLine;
 }
 
 function addPlaceMarker(lat, lon) {

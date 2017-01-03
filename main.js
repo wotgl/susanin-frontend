@@ -74,12 +74,17 @@ myApp.controller("menuCtrl", [
     };
 
     $scope.startPreviousRoute = function() {
-      document.location.hash = '/route/view/';
+      $location.path('/route/view/');
     };
 
     $scope.startNewRoute = function() {
       $scope.previousRoute = false;
       routeFactory.del();
+    };
+
+    $scope.startNewRouteFromDirection = function() {
+      $location.path('/menu/');
+      $scope.startNewRoute();
     };
 
     // Places here
@@ -177,14 +182,18 @@ myApp.controller("routeCtrl", [
   '$routeParams',
   'routeFactory',
   '$interval',
-  function($scope, $http, $routeParams, routeFactory, $interval) {
+  '$location',
+  function($scope, $http, $routeParams, routeFactory, $interval, $location) {
     $scope.dataLoading = true;
     $scope.userChoice = false;
+    $scope.infoLoading = true;
 
     $scope.setRoute = function() {
       var previewRoute = routeFactory.get_preview();
+
       routeFactory.set(previewRoute);
-      document.location.hash = '/route/view/';
+      $location.path('/route/view/');
+      // routeDirection(previewRoute);
     };
 
     $scope.checkedPlace = function(placeId) {
@@ -234,8 +243,31 @@ myApp.controller("routeCtrl", [
       }
     }
 
+    // function setInfo() {
+    //   var routeLine = getRouteLine();
+    //   if (routeLine != undefined) {
+    //     $scope.infoLoading = false;
+    //     $scope.info = getRouteLine().summary;
+    //     console.log(routeFactory.get().length);
+    //     $scope.info['places'] = routeFactory.get();
+    //     var tmp = ($scope.info.totalTime + ($scope.info.places.length * 2700)) / 3600;
+    //     $scope.info.totalTime = tmp.toFixed(1);
+
+    //     if (stopInfo != undefined) {
+    //       $interval.cancel(stopInfo);
+    //       stopInfo = undefined;
+    //     }
+    //   }
+    // }
+
+    console.log("route");
     setContent();
-    stop = $interval(setContent, TIMEOUT);
+    var stop = $interval(setContent, TIMEOUT);
+    var stopInfo;
+
+    // if ($routeParams.view == 'view') {
+    //   stopInfo = $interval(setInfo, TIMEOUT);
+    // }
   }
 ]);
 

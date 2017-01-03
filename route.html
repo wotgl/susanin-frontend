@@ -1,14 +1,55 @@
 <md-toolbar>
-  <div class="md-toolbar-tools">
+
+  <div class="md-toolbar-tools" layout-align="space-between" ng-hide="userChoice">
       <md-button ng-controller="mainCtrl" aria-label="Go Back" ng-click="$back()">
         Назад
       </md-button>
-    <span flex></span>
+      <md-button ng-controller="menuCtrl" aria-label="New" ng-click="startNewRouteFromDirection()">
+        Новый
+      </md-button>
+      <!-- <span flex></span> -->
   </div>
+
+  <div class="md-toolbar-tools" ng-show="userChoice">
+      <md-button ng-controller="mainCtrl" aria-label="Go Back" ng-click="$back()">
+        Назад
+      </md-button>
+      <span flex></span>
+  </div>
+
 </md-toolbar>
 <md-content class="md-padding">
   <div class="tab-content">
       <md-list flex>
+
+        <!-- Info -->
+        <md-list-item class="md-2-line" ng-hide="userChoice">
+          <div class="md-list-item-text" layout="column">
+            <md-card md-theme-watch>
+              <md-card-title>
+                <md-card-title-text style="display: inline;">
+                  <span class="md-headline">
+                    Маршрут
+                  </span>       
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-content>
+                <span class="md-subhead">
+                  <div ng-if="infoLoading">
+                    Загрузка...
+                  </div>
+                  <div ng-if="!infoLoading">
+                    <p>Количество мест: {{info.places.length}}</p>
+                    <p>Расстояние: {{info.totalDistance}} км.</p>
+                    <p>Время: ~{{info.totalTime}}</p>
+                  </div>
+                </span>
+              </md-card-content>
+            </md-card>
+          </div>
+        </md-list-item>
+
+        <!-- Places -->
         <md-list-item class="md-2-line" ng-repeat="item in content">
           <div class="md-list-item-text" layout="column">
           <md-card md-theme-watch>
@@ -17,7 +58,7 @@
                 <span class="md-headline">
                   <i class="material-icons md-dark md-inactive place-color" ng-style="{color: item.colorCode }">fiber_manual_record</i>
                   {{item.name}}
-                </span>        
+                </span>
               </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -27,15 +68,11 @@
                 </div>
                 <div ng-if="!dataLoading">
                   <p>{{item.description}}</p>
-                  <!-- <p>Адрес: {{item.address}}</p>
-                  <p>Время работы: {{item.work_time}}</p> -->
                 </div>
               </span>
 
               <!-- Maps buttons -->
               <md-card-actions ng-controller="placeCtrl" layout="row" layout-align="space-between">
-<!--                 <md-button ng-click="routeToPlace(item.lat, item.lon)">Сюда</md-button>
-                <md-button ng-click="showPlace(item.lat, item.lon)">На карте</md-button> -->
                 <div>
                   <md-button class="md-icon-button control-button" ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
                     <i class="material-icons control-button-icon" style="color: green">done</i>
@@ -54,18 +91,6 @@
                   </md-button>
                 </div>
               </md-card-actions>
-
-              <!-- <hr ng-hide="userChoice"> -->
-              <!-- Like or not buttons -->
-              <!-- <div layout="row" layout-align="space-around" ng-hide="userChoice">
-                <md-button class="md-icon-button" ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
-                  <i class="material-icons" style="color: green">done</i>
-                </md-button>
-                <md-button class="md-icon-button" ng-controller="routeCtrl" ng-click="deletePlace(item.id)" ng-hide="userChoice">
-                  <i class="material-icons" style="color: red">clear</i>
-                </md-button>
-              </div> -->
-
             </md-card-content>
           </md-card>
         </div>
