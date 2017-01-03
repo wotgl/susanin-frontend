@@ -334,6 +334,7 @@ myApp.controller('assembleRouteCtrl', [
       if ($scope.myForm.$valid) {
         // console.log($scope.data);
         routeFactory.init($scope.data);
+        logo_route.style.display = "block";
         document.location.hash = '/route/view/';
       }
     };
