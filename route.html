@@ -17,7 +17,7 @@
                 <span class="md-headline">
                   <i class="material-icons md-dark md-inactive place-color" ng-style="{color: item.colorCode }">fiber_manual_record</i>
                   {{item.name}}
-                </span>                
+                </span>        
               </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -33,21 +33,38 @@
               </span>
 
               <!-- Maps buttons -->
-              <md-card-actions ng-controller="placeCtrl" layout="row" layout-align="end center">
-                <md-button ng-click="routeToPlace(item.lat, item.lon)">Сюда</md-button>
-                <md-button ng-click="showPlace(item.lat, item.lon)">На карте</md-button>
+              <md-card-actions ng-controller="placeCtrl" layout="row" layout-align="space-between">
+<!--                 <md-button ng-click="routeToPlace(item.lat, item.lon)">Сюда</md-button>
+                <md-button ng-click="showPlace(item.lat, item.lon)">На карте</md-button> -->
+                <div>
+                  <md-button class="md-icon-button control-button" ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
+                    <i class="material-icons control-button-icon" style="color: green">done</i>
+                  </md-button>
+                  <md-button class="md-icon-button control-button" ng-controller="routeCtrl" ng-click="deletePlace(item.id)" ng-hide="userChoice">
+                    <i class="material-icons control-button-icon" style="color: red">clear</i>
+                  </md-button>
+                </div>
+
+                <div>
+                  <md-button class="md-icon-button md-accent control-button" aria-label="Settings" ng-click="routeToPlace(item.lat, item.lon)">
+                    <md-icon md-font-library="material-icons" class="control-button-icon">directions</md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button md-primary control-button" aria-label="Favorite" ng-click="showPlace(item.lat, item.lon)">
+                    <md-icon md-font-library="material-icons" class="control-button-icon">place</md-icon>
+                  </md-button>
+                </div>
               </md-card-actions>
 
-              <hr ng-hide="userChoice">
+              <!-- <hr ng-hide="userChoice"> -->
               <!-- Like or not buttons -->
-              <div layout="row" layout-align="space-around" ng-hide="userChoice">
+              <!-- <div layout="row" layout-align="space-around" ng-hide="userChoice">
                 <md-button class="md-icon-button" ng-controller="routeCtrl" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
                   <i class="material-icons" style="color: green">done</i>
                 </md-button>
                 <md-button class="md-icon-button" ng-controller="routeCtrl" ng-click="deletePlace(item.id)" ng-hide="userChoice">
                   <i class="material-icons" style="color: red">clear</i>
                 </md-button>
-              </div>
+              </div> -->
 
             </md-card-content>
           </md-card>

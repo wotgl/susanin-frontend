@@ -50,6 +50,10 @@ body {
     div.tab-content {
         max-height: 55vh;
     }
+
+    .control-button {
+        font-size: 30px !important;
+    }
 }
 
 @media (min-width: 601px) {
@@ -62,6 +66,13 @@ body {
     }
     div.tab-content {
         max-height: 70vh;
+    }
+    .control-place-buttons {
+        margin-top: -10px
+    }
+
+    .control-button {
+        font-size: 36px !important;
     }
 }
 
@@ -166,4 +177,15 @@ img {
 
 .place-color {
     font-size: 14px !important;
+}
+
+.control-button {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.control-button-icon {
+    font-size: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
 }
