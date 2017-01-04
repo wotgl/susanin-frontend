@@ -282,7 +282,7 @@ myApp.controller("routeCtrl", [
         content = routeFactory.get();
         $scope.userChoice = false;
       }
-      if (content.length != 0) {
+      if (content.length != 0 && content.length != undefined) {
         $scope.dataLoading = false;
         $scope.content = content;
 
@@ -459,6 +459,7 @@ myApp.factory('routeFactory', [
     var initData = {};
     var route = {};
     var routePreview = {};
+    var routeInfo = {};
 
     function init(data) {
       initData = data;
@@ -485,6 +486,32 @@ myApp.factory('routeFactory', [
       route = {};
     }
 
+    function sortRouteByDistance(input_route) {
+      var _route = JSON.parse(JSON.stringify(input_route));
+      var len = _route.length;
+      var sortRoute = [];
+      for (var i = 0; i < len; i++) {
+        var minDistance = 9999999999;
+        var placeIndex = 0;
+        for (var j = 0; j < _route.length; j++) {
+          var distance = getDistanceFromLatLonInKm(userLocation[0], userLocation[1], _route[j].lat, _route[j].lon);
+          if (distance < minDistance) {
+            minDistance = distance;
+            placeIndex = j;
+          }
+        }
+        _route[placeIndex].distance = minDistance;
+        sortRoute.push(_route[placeIndex]);
+        _route.splice(placeIndex, 1);
+      }
+      return sortRoute;
+    }
+
+    function initRouteInfo(input_route) {
+      var _route = JSON.parse(JSON.stringify(input_route));
+
+    }
+
     function fetchRoute() {
       var url = baseURL_route + '/get_route/';
       $http.post(url, {
@@ -496,6 +523,9 @@ myApp.factory('routeFactory', [
         })
         .then(function(result) {
           route = result.data;
+          route = sortRouteByDistance(route);
+          console.log(route);
+          initRouteInfo(route);
         });
     }
 

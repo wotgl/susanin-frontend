@@ -63,10 +63,11 @@
             </md-card-title>
             <md-card-content>
               <span class="md-subhead">
-                <div ng-if="dataLoading">
+                <div ng-show="dataLoading">
                   Загрузка...
                 </div>
-                <div ng-if="!dataLoading">
+                <div ng-show="!dataLoading">
+                  Расстояние: {{(item.distance|number:1)}} км
                   <p>{{item.description}}</p>
                 </div>
               </span>
