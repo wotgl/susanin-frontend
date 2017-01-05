@@ -1,6 +1,6 @@
 var baseURL = 'https://thisisfine.tk:10241/api/v1';
 var baseURL_route = 'http://127.0.0.1/api';
-baseURL_route = 'http://192.168.1.64/api';
+baseURL_route = 'http://192.168.1.65/api';
 var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');
@@ -15,7 +15,12 @@ logo.onclick = function() {
 
 var logo_route = document.getElementById('route_logo');
 logo_route.onclick = function() {
-  document.location.hash = '/route/view/';
+  var path = document.location.hash;
+  if (path == '#/route/view') {
+    history.back();
+  } else {
+    document.location.hash = '/route/view/';
+  }
 }
 
 var myApp = angular.module('menuApp', ['ngRoute', 'ngMaterial']);
@@ -176,7 +181,6 @@ myApp.controller("placeCtrl", [
       if (content != undefined) {
         $scope.content = content;
         $scope.dataLoading = false;
-
         if (stop != undefined) {
           $interval.cancel(stop);
           stop = undefined;
@@ -334,7 +338,6 @@ myApp.controller('assembleRouteCtrl', [
       if ($scope.myForm.$valid) {
         // console.log($scope.data);
         routeFactory.init($scope.data);
-        logo_route.style.display = "block";
         document.location.hash = '/route/view/';
       }
     };
@@ -471,7 +474,9 @@ myApp.factory('routeFactory', [
     }
 
     function set(data) {
-      route = data;
+      route = sortRouteByDistance(data);
+      initRouteInfo(route);
+      logo_route.style.display = "block";
     }
 
     function get_preview() {
@@ -484,24 +489,31 @@ myApp.factory('routeFactory', [
 
     function del() {
       route = {};
+      deleteRouteDirection();
     }
 
     function sortRouteByDistance(input_route) {
       var _route = JSON.parse(JSON.stringify(input_route));
       var len = _route.length;
       var sortRoute = [];
+      var _user = [userLocation[0], userLocation[1]]
       for (var i = 0; i < len; i++) {
         var minDistance = 9999999999;
         var placeIndex = 0;
         for (var j = 0; j < _route.length; j++) {
-          var distance = getDistanceFromLatLonInKm(userLocation[0], userLocation[1], _route[j].lat, _route[j].lon);
+          var distance = getDistanceFromLatLonInKm(_user[0], _user[1], _route[j].lat, _route[j].lon);
           if (distance < minDistance) {
             minDistance = distance;
             placeIndex = j;
           }
         }
         _route[placeIndex].distance = minDistance;
+
+        // Info fo user - 1st place! But route use chains 
+        // _route[placeIndex].distance = getDistanceFromLatLonInKm(userLocation[0], userLocation[1], _route[placeIndex].lat, _route[placeIndex].lon);
         sortRoute.push(_route[placeIndex]);
+        _user[0] = _route[placeIndex].lat;
+        _user[1] = _route[placeIndex].lon;
         _route.splice(placeIndex, 1);
       }
       return sortRoute;
@@ -509,7 +521,7 @@ myApp.factory('routeFactory', [
 
     function initRouteInfo(input_route) {
       var _route = JSON.parse(JSON.stringify(input_route));
-
+      routeDirection(_route);
     }
 
     function fetchRoute() {
@@ -522,10 +534,11 @@ myApp.factory('routeFactory', [
           data: initData
         })
         .then(function(result) {
-          route = result.data;
-          route = sortRouteByDistance(route);
-          console.log(route);
-          initRouteInfo(route);
+          // route = ;
+          set(result.data);
+          // route = sortRouteByDistance(route);
+          // console.log(route);
+          // initRouteInfo(route);
         });
     }
 

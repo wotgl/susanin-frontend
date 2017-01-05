@@ -118,8 +118,8 @@ function routeToPlace(lat, lon) {
     show: false,
     language: 'ru',
     routeWhileDragging: true,
-    createMarker: function() {
-      return L.marker([lat, lon]);
+    createMarker: function(i, waypoint, n) {
+      return L.marker([waypoint.latLng.lat, waypoint.latLng.lng]);
     },
   });
   map.addControl(routeControl);
@@ -130,6 +130,7 @@ var BBB;
 var routeLine;
 
 function routeDirection(places) {
+  routeLine = undefined;
   deleteMarkers();
 
   var waypoints = [];
@@ -138,28 +139,41 @@ function routeDirection(places) {
     waypoints.push(L.latLng(places[i].lat, places[i].lon));
   }
 
-  var plan = new L.Routing.Plan(waypoints);
+  var plan = new L.Routing.Plan(waypoints, {
+    draggableWaypoints: false
+  });
 
   routeControl = L.Routing.control({
     waypoints: waypoints,
+
     router: L.Routing.mapzen('mapzen-SHRFnGA', {
       costing: 'pedestrian'
     }),
     show: false,
     language: 'ru',
     routeWhileDragging: true,
-    plan: plan,
     routeLine: function(route) {
       routeLine = route;
 
       var line = L.Routing.line(route);
       return line;
-    }
+    },
+    createMarker: function(i, waypoint, n) {
+      if (i == 0) {
+        return false;
+      }
+
+      return L.marker([waypoint.latLng.lat, waypoint.latLng.lng]);
+    },
   });
 
   AAA = routeControl;
 
   map.addControl(routeControl);
+}
+
+function deleteRouteDirection() {
+  deleteMarkers();
 }
 
 function getRouteLine() {
