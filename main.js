@@ -182,6 +182,10 @@ myApp.controller("placeCtrl", [
       if (content != undefined) {
         $scope.content = content;
         $scope.dataLoading = false;
+        $scope.content['distance'] = Math.floor(0.35 + getDistanceFromLatLonInKm(
+          userLocation[0], userLocation[1], content.lat, content.lon));
+        // console.log(getDistanceFromLatLonInKm(
+        // userLocation[0], userLocation[1], content.lat, content.lon));
         if (stop != undefined) {
           $interval.cancel(stop);
           stop = undefined;
