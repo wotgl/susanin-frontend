@@ -40,8 +40,13 @@
                   </div>
                   <div ng-if="!infoLoading">
                     <p>Количество мест: {{info.places.length}}</p>
-                    <p>Расстояние: {{info.totalDistance}} км.</p>
-                    <p>Время: ~{{info.totalTime}}</p>
+                    <p>Расстояние: {{info.totalDistance}} км</p>
+                    <p>Время: ~{{info._totalTime}} ч</p>
+                    <div layout="row" layout-align="center center" layout-wrap>
+                      <md-button class="md-warn" style="color: #ee8208;" ng-click="showRouteOnMap()">
+                      На карте
+                      </md-button>
+                    </div>
                   </div>
                 </span>
               </md-card-content>
@@ -52,6 +57,16 @@
         <!-- Places -->
         <md-list-item class="md-2-line" ng-repeat="item in content">
           <div class="md-list-item-text" layout="column">
+          
+          <!-- Distance from A to B -->
+          <div layout="row" layout-align="center" ng-hide="userChoice">
+            <i class="material-icons">directions_run</i>
+            ~{{(item.distance|number:1)}} км
+          </div>
+          <div layout="row" layout-align="center" ng-hide="userChoice">
+          <i class="material-icons">expand_more</i>
+          </div>
+          
           <md-card md-theme-watch>
             <md-card-title>
               <md-card-title-text style="display: inline;">
@@ -67,8 +82,9 @@
                   Загрузка...
                 </div>
                 <div ng-show="!dataLoading">
-                  Расстояние: {{(item.distance|number:1)}} км
-                  <p>{{item.description}}</p>
+                  <p>
+                    {{item.description}}
+                  </p>
                 </div>
               </span>
 

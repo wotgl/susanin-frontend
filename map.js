@@ -6,12 +6,14 @@ var spb = {
   'lon': 30.30291080474854
 };
 var spb_locations = [59.783808, 29.736831, 60.104248, 30.621194];
+var MAX_ZOOM = 15;
+var MIN_ZOOM = 11;
 
 var map = L.map(
   'map', {
     "keyboardZoomOffset": .05,
-    maxZoom: 15,
-    minZoom: 11,
+    maxZoom: MAX_ZOOM,
+    minZoom: MIN_ZOOM,
     zoomControl: false,
     "scrollWheelZoom": true,
     'tap': false,
@@ -119,6 +121,9 @@ function routeToPlace(lat, lon) {
     language: 'ru',
     routeWhileDragging: true,
     createMarker: function(i, waypoint, n) {
+      if (i == 0) {
+        return false;
+      }
       return L.marker([waypoint.latLng.lat, waypoint.latLng.lng]);
     },
   });

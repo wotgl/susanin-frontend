@@ -1,4 +1,5 @@
 var baseURL = 'https://thisisfine.tk:10241/api/v1';
+baseURL = 'http://student.bmstu.cloud:10231/api/v1';
 var baseURL_route = 'http://127.0.0.1/api';
 baseURL_route = 'http://192.168.1.65/api';
 var TIMEOUT = 200;
@@ -250,6 +251,12 @@ myApp.controller("routeCtrl", [
       // routeDirection(previewRoute);
     };
 
+    $scope.showRouteOnMap = function() {
+      $location.path('/');
+      routeFactory.set($scope.content);
+      map.setZoom(MIN_ZOOM + 2);
+    }
+
     $scope.checkedPlace = function(placeId) {
       var delIndex;
       for (i = 0; i < $scope.content.length; i++) {
@@ -264,6 +271,12 @@ myApp.controller("routeCtrl", [
           placeId: placeId
         })
         .then(function(result) {});
+
+      // update direction
+      routeFactory.set($scope.content);
+      $scope.content = routeFactory.get();
+      checkStopInfo();
+      stopInfo = $interval(setInfo, TIMEOUT);
     };
 
     $scope.deletePlace = function(placeId) {
@@ -275,6 +288,12 @@ myApp.controller("routeCtrl", [
         }
       }
       $scope.content.splice(delIndex, 1);
+
+      // update direction
+      routeFactory.set($scope.content);
+      $scope.content = routeFactory.get();
+      checkStopInfo();
+      stopInfo = $interval(setInfo, TIMEOUT);
     };
 
     function setContent() {
@@ -297,31 +316,39 @@ myApp.controller("routeCtrl", [
       }
     }
 
-    // function setInfo() {
-    //   var routeLine = getRouteLine();
-    //   if (routeLine != undefined) {
-    //     $scope.infoLoading = false;
-    //     $scope.info = getRouteLine().summary;
-    //     console.log(routeFactory.get().length);
-    //     $scope.info['places'] = routeFactory.get();
-    //     var tmp = ($scope.info.totalTime + ($scope.info.places.length * 2700)) / 3600;
-    //     $scope.info.totalTime = tmp.toFixed(1);
+    function checkStopInfo() {
+      // delete previous interval
+      if (stopInfo != undefined) {
+        $interval.cancel(stopInfo);
+        stopInfo = undefined;
+      }
+    }
 
-    //     if (stopInfo != undefined) {
-    //       $interval.cancel(stopInfo);
-    //       stopInfo = undefined;
-    //     }
-    //   }
-    // }
+    function setInfo() {
+      var routeLine = getRouteLine();
+      console.log("setInfo");
+      if (routeLine != undefined) {
+        $scope.infoLoading = false;
+        $scope.info = getRouteLine().summary;
+        $scope.info['places'] = routeFactory.get();
+        var tmp = ($scope.info.totalTime + ($scope.info.places.length * 2700)) / 3600;
+        $scope.info['_totalTime'] = tmp.toFixed(1);
+
+        if (stopInfo != undefined) {
+          $interval.cancel(stopInfo);
+          stopInfo = undefined;
+        }
+      }
+    }
 
     console.log("route");
     setContent();
     var stop = $interval(setContent, TIMEOUT);
     var stopInfo;
 
-    // if ($routeParams.view == 'view') {
-    //   stopInfo = $interval(setInfo, TIMEOUT);
-    // }
+    if ($routeParams.view == 'view') {
+      stopInfo = $interval(setInfo, TIMEOUT);
+    }
   }
 ]);
 
@@ -534,11 +561,7 @@ myApp.factory('routeFactory', [
           data: initData
         })
         .then(function(result) {
-          // route = ;
           set(result.data);
-          // route = sortRouteByDistance(route);
-          // console.log(route);
-          // initRouteInfo(route);
         });
     }
 
