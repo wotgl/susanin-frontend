@@ -14,15 +14,20 @@ var map = L.map(
     "keyboardZoomOffset": .05,
     maxZoom: MAX_ZOOM,
     minZoom: MIN_ZOOM,
-    zoomControl: false,
+    zoomControl: true,
     "scrollWheelZoom": true,
     'tap': false,
   });
+map.zoomControl.setPosition('topleft');
 var layer = Tangram.leafletLayer({
   scene: "lib/susanin/styles/crosshatch.yaml",
 });
 layer.addTo(map);
 
+// ZoomControl for mobile/desktop
+if (detectmob()) {
+  map.zoomControl.remove();
+}
 
 var placeMarker, userMarker;
 var userLocation, routeControl;

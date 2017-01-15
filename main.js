@@ -1,7 +1,8 @@
 var baseURL = 'https://thisisfine.tk:10241/api/v1';
-baseURL = 'http://student.bmstu.cloud:10231/api/v1';
+baseURL = 'http://susanin.ml/api/v1';
 var baseURL_route = 'http://127.0.0.1/api';
-baseURL_route = 'http://192.168.1.65/api';
+baseURL_route = 'http://192.168.1.64/api';
+baseURL_route = 'http://susanin.ml/api';
 var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');

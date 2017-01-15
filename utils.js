@@ -43,6 +43,41 @@ function createCircle(text, color) {
 function drawPlaces(places) {
   var colors = {};
 
+  function iconCreateFunction(cluster) {
+    var childCount = cluster.getChildCount();
+    // console.log("AAAA");
+
+    var allMarkers = cluster.getAllChildMarkers();
+    var colors = {};
+    for (i = 0; i < allMarkers.length; i++) {
+      // console.log(allMarkers[i].options.icon.options.color);
+      if (colors[allMarkers[i].options.icon.options.color] == undefined) {
+        colors[allMarkers[i].options.icon.options.color] = 1;
+      } else {
+        colors[allMarkers[i].options.icon.options.color] += 1;
+      }
+    }
+
+    var sortColors = getSortedKeys(colors);
+
+    var c = ' marker-cluster-';
+    if (childCount < 10) {
+      c += 'small';
+    } else if (childCount < 100) {
+      c += 'medium';
+    } else {
+      c += 'large';
+    }
+
+    return new L.DivIcon({
+      // html: '<div style="background: linear-gradient(to left, ' + '#ffffff 50%' + ', ' + sortColors[0] + ' 50%);"><span>' + childCount + '</span></div>',
+      html: '<div ><span>' + '<i class="material-icons">plus_one</i>' + '</span></div>',
+      // html: '<div style="background: radial-gradient(at top, white 50%, ' + sortColors[0] + ' 50%);"><span>' + childCount + '</span></div>',
+      className: 'marker-cluster' + c,
+      iconSize: new L.Point(30, 30)
+    });
+  }
+
   for (var i in places) {
     var place = places[i];
     if (!colors[place.colorCode]) {
@@ -53,7 +88,8 @@ function drawPlaces(places) {
 
   for (var i in colors) {
     var markers = L.markerClusterGroup({
-      maxClusterRadius: 25
+      maxClusterRadius: 25,
+      // iconCreateFunction: iconCreateFunction
     });
     for (var j in colors[i]) {
       var place = colors[i][j];
@@ -61,7 +97,7 @@ function drawPlaces(places) {
       var title = parseInt(place.id);
       var greenIcon = L.icon({
         iconUrl: createCircle(title, i),
-
+        color: i,
         iconSize: [25, 25],
       });
       var marker = L.marker(new L.LatLng(place.lat, place.lon), {
@@ -96,4 +132,20 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 
 function deg2rad(deg) {
   return deg * (Math.PI / 180)
+}
+
+function detectmob() {
+  if (window.innerWidth <= 800 && window.innerHeight <= 750) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function getSortedKeys(obj) {
+  var keys = [];
+  for (var key in obj) keys.push(key);
+  return keys.sort(function(a, b) {
+    return obj[b] - obj[a]
+  });
 }
