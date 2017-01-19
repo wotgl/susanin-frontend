@@ -12,19 +12,27 @@
       <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">
-              {{content.expert}}
-            </span>
+            
+            <div layout="row" layout-align="center center">
+              <span class="md-headline">
+                {{content.firstName}} {{content.secondName}}
+              </span>
+            </div>
+
             <span class="md-subhead">
               <div ng-if="dataLoading">
                 Загрузка...
               </div>
               <div ng-if="!dataLoading">
-                <p>{{content.story}}</p>
-                <!-- <p>Адрес: {{content.address}}</p> -->
-                <!-- <p>Время работы: {{content.work_time}}</p>          -->
+                <p align="justify">
+                  <!-- <img width="100px" height="100px" src="http://susanin.ml{{content.photo}}" style="float: right;"/> -->
+                  <div class="expert_story">
+                  {{content.story}}
+                  </div>
+                </p>
               </div>
             </span>
+
           </md-card-title-text>
         </md-card-title>
       </md-card>

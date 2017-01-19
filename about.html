@@ -1,0 +1,31 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button ng-controller="mainCtrl" aria-label="Go Back" ng-click="$back()">
+      Назад
+    </md-button>
+    <span flex></span>
+  </div>
+</md-toolbar>
+<md-content class="md-padding">
+  <div class="tab-content">
+    <md-content>
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline" style="text-align: center;">
+              <img src="./img/face.png"/ width="50px" height="65px">
+            </span>
+            <span class="md-subhead">
+              <div align="justify">
+              Сусанин - независимый и субъективный путеводитель по Санкт-Петербургу. Каждый раз, когда в город приезжают наши друзья, они спрашивают, куда пойти. Каждый раз в ответ мы пишем список. Теперь мы просто будем выдавать им этот гид. Здесь не «самое лучшее», и мы совсем не претендуем на полный охват, но советуем ровно то, что интересно нам самим — коренным и понаехавшим петербуржцам, работающим в городской журналистике и клубно-барной индустрии. Идеологический момент заключается в нашем пристрастии к локальным ценностям: больше малого бизнеса и общественных пространств, меньше государственных институций и сетевых гигантов. Этот путеводитель поможет отдохнуть в Петербурге как мы любим.<br><br>
+              <div style="text-align: right;">
+              Дорогая редакция и Технопарк.
+              </div>
+              </div>
+            </span>
+          </md-card-title-text>
+        </md-card-title>
+      </md-card>
+    </md-content>
+  </div>
+</md-content>

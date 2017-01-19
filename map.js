@@ -17,6 +17,7 @@ var map = L.map(
     zoomControl: true,
     "scrollWheelZoom": true,
     'tap': false,
+    attributionControl: false
   });
 map.zoomControl.setPosition('topleft');
 var layer = Tangram.leafletLayer({

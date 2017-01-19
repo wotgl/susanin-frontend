@@ -1,8 +1,9 @@
-var baseURL = 'https://thisisfine.tk:10241/api/v1';
+// var baseURL = 'http://127.0.0.1:12345/api/v1';
 baseURL = 'http://susanin.ml/api/v1';
 var baseURL_route = 'http://127.0.0.1/api';
 baseURL_route = 'http://192.168.1.64/api';
 baseURL_route = 'http://susanin.ml/api';
+var djangoURL = 'http://susanin.ml/api/django';
 var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');
@@ -43,6 +44,9 @@ myApp.config(function($routeProvider, $mdGestureProvider) {
   }).when("/route/:view", {
     templateUrl: "route.html",
     controller: "routeCtrl"
+  }).when("/about", {
+    templateUrl: "about.html",
+    controller: "aboutCtrl"
   });
   $mdGestureProvider.skipClickHijack();
 });
@@ -118,8 +122,10 @@ myApp.controller("menuCtrl", [
         $scope.placesLoading = false;
         $scope.placesContent = placesContent;
 
+        console.log('setPlacesContent');
+
         if (stopPlaces != undefined) {
-          $interval.cancel(stop);
+          $interval.cancel(stopPlaces);
           stopPlaces = undefined;
         }
       }
@@ -134,8 +140,11 @@ myApp.controller("menuCtrl", [
         $scope.expertsLoading = false;
         $scope.expertsContent = expertsContent;
 
+        console.log('setExpertsContent');
+        // console.log($scope.expertsContent);
+
         if (stopExperts != undefined) {
-          $interval.cancel(stop);
+          $interval.cancel(stopExperts);
           stopExperts = undefined;
         }
       }
@@ -376,6 +385,11 @@ myApp.controller('assembleRouteCtrl', [
   }
 ]);
 
+myApp.controller('aboutCtrl', [
+  '$scope',
+  function($scope) {}
+]);
+
 myApp.controller('mainCtrl', [
   '$scope',
   '$document',
@@ -469,12 +483,13 @@ myApp.factory('expertsFactory', [
     }
 
     function fetchPlaces() {
-      var url = baseURL_route + '/expert/';
-      $http.post(url, {
+      var url = djangoURL + '/expert/';
+      $http.get(url, {
           places: 'all'
         })
         .then(function(result) {
           savedData = result.data;
+          // console.log(savedData);
         });
     }
 

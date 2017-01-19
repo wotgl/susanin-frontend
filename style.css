@@ -145,10 +145,10 @@ body {
 main {
     background: ivory;
 }
-img {
+/*img {
     max-width: 100%;
     width: 100%;
-}
+}*/
 #open-menu-button {
     background-color: #ee8208;
 }
@@ -201,4 +201,10 @@ img {
     font-size: 36px !important;
     width: 36px !important;
     height: 36px !important;
+}
+
+.expert_story {
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
 }
