@@ -43,6 +43,9 @@ map.on('click', function(e) {
 
 // Init
 function init() {
+  if (!webgl_support()) {
+    alert('Включите WebGL или обновите браузер');
+  }
   var _locations = [
     [59.936802, 30.327609],
     [59.939201, 30.323238],
