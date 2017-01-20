@@ -71,7 +71,7 @@ function init() {
     }
 
     function notSaintPeterburg() {
-      alert('Вы не в Санкт-Петербурге. Ваша местоположение на карте выбрано случаным образом :)');
+      alert('Вы не в Санкт-Петербурге. Ваше местоположение на карте выбрано случаным образом :)');
     }
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
