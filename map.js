@@ -67,11 +67,11 @@ function init() {
 
   function identifyGeo() {
     function geoDisable() {
-      alert('geoDisable');
+      alert('Геолокация отключена.');
     }
 
     function notSaintPeterburg() {
-      alert('notSaintPeterburg');
+      alert('Вы не в Санкт-Петербурге. Ваша местоположение на карте выбрано случаным образом :)');
     }
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -88,11 +88,11 @@ function init() {
         }
       }, geoDisable);
     } else {
-      geoDisable();
+      // geoDisable();
     }
   }
 
-  // identifyGeo();   // DEBUG
+  identifyGeo(); // DEBUG
 }
 init();
 

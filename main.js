@@ -245,13 +245,6 @@ myApp.controller("expertCtrl", [
         targetEvent: ev,
         clickOutsideToClose: true,
       });
-      // $mdDialog.show({
-      //   controller: DialogController,
-      //   contentElement: '#myDialog',
-      //   parent: angular.element(document.querySelector('#app')),
-      //   targetEvent: ev,
-      //   clickOutsideToClose: true
-      // });
     };
 
     function DialogController($scope, $mdDialog, $location) {
