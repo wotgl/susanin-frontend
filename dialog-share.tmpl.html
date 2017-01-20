@@ -1,0 +1,18 @@
+<md-dialog>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <span class="md-headline">
+        <div>Рассказать друзьям</div>
+      </span>
+      Или просто скопировать <div ng-click="answer();" class="share-link">ссылку</div>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions layout="row" layout-align="space-around">
+      <a target="_blank" href="https://connect.ok.ru/offer?url={{link}}">
+        <img style="width: 24px; height: 24px;" src="http://st.mycdn.me/res/i/ok_logo.png"/>
+      </a>
+      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{link}}">
+        <img style="width: 24px; height: 24px;" src="https://facebookbrand.com/wp-content/themes/fb-branding/prj-fb-branding/assets/images/fb-art.png"/>
+      </a>
+    </md-dialog-actions>
+</md-dialog>

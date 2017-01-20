@@ -216,7 +216,9 @@ myApp.controller("expertCtrl", [
   '$routeParams',
   'expertsFactory',
   '$interval',
-  function($scope, $rootScope, $http, $routeParams, expertsFactory, $interval) {
+  '$mdDialog',
+  '$location',
+  function($scope, $rootScope, $http, $routeParams, expertsFactory, $interval, $mdDialog, $location) {
     var stop;
     $scope.dataLoading = true;
 
@@ -233,6 +235,35 @@ myApp.controller("expertCtrl", [
           stop = undefined;
         }
       }
+    }
+
+    $scope.showConfirm = function(ev) {
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'dialog-share.tmpl.html',
+        parent: angular.element(document.querySelector('#app')),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+      });
+      // $mdDialog.show({
+      //   controller: DialogController,
+      //   contentElement: '#myDialog',
+      //   parent: angular.element(document.querySelector('#app')),
+      //   targetEvent: ev,
+      //   clickOutsideToClose: true
+      // });
+    };
+
+    function DialogController($scope, $mdDialog, $location) {
+      $scope.link = $location.absUrl().replace('#', '%23'); // safe
+      $scope.answer = function() {
+        copyToClipboard($location.absUrl());
+        $mdDialog.hide();
+      };
+    }
+
+    $scope.getLink = function() {
+      alert(1);
     }
 
     $scope.$goToExpertsRoute = function(expert_id) {

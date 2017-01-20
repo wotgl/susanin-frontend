@@ -149,3 +149,11 @@ function getSortedKeys(obj) {
     return obj[b] - obj[a]
   });
 }
+
+function copyToClipboard(text) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val(text).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
