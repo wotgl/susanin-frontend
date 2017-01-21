@@ -199,8 +199,8 @@ myApp.controller("placeCtrl", [
         var tags = "";
         var tmp = $scope.content['tags'].split(',');
         for (var j = 0; j < tmp.length; j++) {
-          if (tmp[j].length != 0) {
-            tags += "#" + tmp[j].trim() + " ";
+          if (tmp[j].trim().length != 0) {
+            tags = tags + "#" + tmp[j].trim() + " ";
           }
         }
         $scope.content['tags'] = tags;
