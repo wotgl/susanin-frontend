@@ -194,6 +194,16 @@ myApp.controller("placeCtrl", [
         $scope.dataLoading = false;
         $scope.content['distance'] = Math.floor(0.35 + getDistanceFromLatLonInKm(
           userLocation[0], userLocation[1], content.lat, content.lon));
+
+        // tags here
+        var tags = "";
+        var tmp = $scope.content['tags'].split(',');
+        for (var j = 0; j < tmp.length; j++) {
+          if (tmp[j].length != 0) {
+            tags += "#" + tmp[j].trim() + " ";
+          }
+        }
+        $scope.content['tags'] = tags;
         // console.log(getDistanceFromLatLonInKm(
         // userLocation[0], userLocation[1], content.lat, content.lon));
         if (stop != undefined) {

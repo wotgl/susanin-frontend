@@ -23,7 +23,8 @@
               <div ng-if="!dataLoading" align="justify">
                 <p>{{content.description}}</p>
                 <p>Адрес: {{content.address}}</p>
-                <p>Время работы: {{content.work_time}}</p>
+                <p ng-if='content.work_time !== "-"'>Телефон: {{content.work_time}}</p>
+                <p>Теги: {{content.tags}}</p>
               </div>
             </span>
           </md-card-title-text>
