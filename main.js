@@ -65,6 +65,8 @@ myApp.controller("menuCtrl", [
   '$location',
   '$routeParams',
   function($scope, $rootScope, $http, placesFactory, expertsFactory, routeFactory, $interval, $location, $routeParams) {
+    console.info('menuCtrl');
+
     var stopPlaces, stopExperts;
     $scope.placesLoading = true;
     $scope.expertsLoading = true;
@@ -78,8 +80,6 @@ myApp.controller("menuCtrl", [
     $scope.$getExpert = function(expert_id) {
       $location.path('/expert/' + expert_id + '/');
     };
-
-    console.log("menuCtrl");
 
     $scope.onTabSelected = function(md_selected) {
       $rootScope.md_selected = md_selected;
@@ -119,10 +119,10 @@ myApp.controller("menuCtrl", [
     function setPlacesContent() {
       var placesContent = placesFactory.get();
       if (placesContent.length != 0) {
+        console.log('menuCtrl:setPlacesContent');
+
         $scope.placesLoading = false;
         $scope.placesContent = placesContent;
-
-        console.log('setPlacesContent');
 
         if (stopPlaces != undefined) {
           $interval.cancel(stopPlaces);
@@ -137,11 +137,10 @@ myApp.controller("menuCtrl", [
     function setExpertsContent() {
       var expertsContent = expertsFactory.get();
       if (expertsContent.length != 0) {
+        console.log('menuCtrl:setExpertsContent');
+
         $scope.expertsLoading = false;
         $scope.expertsContent = expertsContent;
-
-        console.log('setExpertsContent');
-        // console.log($scope.expertsContent);
 
         if (stopExperts != undefined) {
           $interval.cancel(stopExperts);
@@ -158,12 +157,6 @@ myApp.controller("menuCtrl", [
       $scope.previousRoute = true;
       logo_route.style.display = "block";
     }
-
-    // if (!$routeParams.page) {
-    //   $scope.pageId = 1;
-    // } else {
-    //   $scope.pageId = $routeParams.page;
-    // }
   }
 ]);
 
@@ -174,6 +167,8 @@ myApp.controller("placeCtrl", [
   'placesFactory',
   '$interval',
   function($scope, $http, $routeParams, placesFactory, $interval) {
+    console.info('placeCtrl');
+
     var stop;
     $scope.dataLoading = true;
 
@@ -190,6 +185,8 @@ myApp.controller("placeCtrl", [
     function setContent() {
       var content = placesFactory.get_by_id($routeParams.id);
       if (content != undefined) {
+        console.log('placeCtrl:setContent');
+
         $scope.content = content;
         $scope.dataLoading = false;
         $scope.content['distance'] = Math.floor(0.35 + getDistanceFromLatLonInKm(
@@ -228,14 +225,16 @@ myApp.controller("expertCtrl", [
   '$mdDialog',
   '$location',
   function($scope, $rootScope, $http, $routeParams, expertsFactory, $interval, $mdDialog, $location) {
+    console.info('expertCtrl');
+
     var stop;
     $scope.dataLoading = true;
-
-
 
     function setContent() {
       var content = expertsFactory.get_by_id($routeParams.id);
       if (content != undefined) {
+        console.log('expertCtrl:setContent');
+
         $scope.content = content;
         $scope.dataLoading = false;
 
@@ -272,8 +271,8 @@ myApp.controller("expertCtrl", [
       $rootScope.$broadcast('event_expertRoute', expert_id);
     }
 
-    setContent();
     stop = $interval(setContent, TIMEOUT);
+    setContent();
 
   }
 ]);
@@ -286,6 +285,8 @@ myApp.controller("routeCtrl", [
   '$interval',
   '$location',
   function($scope, $http, $routeParams, routeFactory, $interval, $location) {
+    console.info('routeCtrl');
+
     $scope.dataLoading = true;
     $scope.userChoice = false;
     $scope.infoLoading = true;
@@ -353,6 +354,7 @@ myApp.controller("routeCtrl", [
         $scope.userChoice = false;
       }
       if (content.length != 0 && content.length != undefined) {
+        console.log('routeCtrl:setContent');
         $scope.dataLoading = false;
         $scope.content = content;
 
@@ -373,8 +375,9 @@ myApp.controller("routeCtrl", [
 
     function setInfo() {
       var routeLine = getRouteLine();
-      console.log("setInfo");
       if (routeLine != undefined) {
+        console.log('routeCtrl:setInfo');
+
         $scope.infoLoading = false;
         $scope.info = getRouteLine().summary;
         $scope.info['places'] = routeFactory.get();
@@ -388,9 +391,8 @@ myApp.controller("routeCtrl", [
       }
     }
 
-    console.log("route");
-    setContent();
     var stop = $interval(setContent, TIMEOUT);
+    setContent();
     var stopInfo;
 
     if ($routeParams.view == 'view') {
@@ -403,14 +405,14 @@ myApp.controller('assembleRouteCtrl', [
   '$scope',
   'routeFactory',
   function($scope, routeFactory) {
+    console.info('assembleRouteCtrl');
+
     $scope.clearValue = function() {
       $scope.data = undefined;
     };
     $scope.data = {};
     $scope.save = function() {
-      // console.log($scope.myForm);
       if ($scope.myForm.$valid) {
-        // console.log($scope.data);
         routeFactory.init($scope.data);
         document.location.hash = '/route/view/';
       }
@@ -420,13 +422,17 @@ myApp.controller('assembleRouteCtrl', [
 
 myApp.controller('aboutCtrl', [
   '$scope',
-  function($scope) {}
+  function($scope) {
+    console.info('aboutCtrl');
+  }
 ]);
 
 myApp.controller('mainCtrl', [
   '$scope',
   '$document',
   function($scope, $document) {
+    console.info('mainCtrl');
+
     $scope.$back = function() {
       window.history.back();
     };
