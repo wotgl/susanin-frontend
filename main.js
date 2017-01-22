@@ -184,6 +184,7 @@ myApp.controller("placeCtrl", [
 
     function setContent() {
       var content = placesFactory.get_by_id($routeParams.id);
+      console.log("AAA");
       if (content != undefined) {
         console.log('placeCtrl:setContent');
 
@@ -209,6 +210,11 @@ myApp.controller("placeCtrl", [
       }
     }
 
+    var stop;
+    console.log($routeParams);
+    if (!$routeParams.id) {
+      return;
+    }
     var stop = $interval(setContent, TIMEOUT);
     setContent();
 

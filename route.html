@@ -89,7 +89,7 @@
               </span>
 
               <!-- Maps buttons -->
-              <md-card-actions ng-controller="placeCtrl" layout="row" layout-align="space-between">
+              <md-card-actions layout="row" layout-align="space-between">
                 <div>
                   <md-button class="md-icon-button control-button" ng-click="checkedPlace(item.id)" ng-hide="userChoice">
                     <i class="material-icons control-button-icon" style="color: green">done</i>
@@ -119,4 +119,5 @@
   <md-card-actions layout="row" layout-align="end center" ng-show="userChoice">
     <md-button ng-click="setRoute()">Иду!</md-button>
   </md-card-actions>
+  <div ng-controller="placeCtrl"></div>
 </md-content>
