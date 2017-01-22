@@ -57,7 +57,7 @@ styles:
 sources:
     osm:
         type: TopoJSON
-        url:  //vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-JUsa0Gc
+        url:  http://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-JUsa0Gc
 
 layers:
     earth:
@@ -83,7 +83,7 @@ layers:
     roads:
         data: { source: osm }
         filter: { kind: [highway, major_road] }
-        properties: { width: 1111 }
+        # properties: { width: 1111 }
         draw:
             ink-lines:
                 order: 3
