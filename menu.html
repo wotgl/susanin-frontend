@@ -46,7 +46,7 @@
 
                 <md-slider-container>
                   <span>Время</span>
-                  <md-slider md-discrete flex min="1" max="8" ng-model="data.time" aria-label="red" id="red-slider">
+                  <md-slider md-discrete flex min="1" max="8" ng-model="data.time" aria-label="red" ng-init="data.time=1" id="red-slider">
                   </md-slider>
                   <md-input-container class="md-input-has-placeholder">
                     ч.
@@ -60,7 +60,7 @@
                   </div>
                   <div layout="column" layout-align="center">
                     <md-checkbox ng-model="data.type.restaurant">Поесть</md-checkbox>
-                    <md-checkbox ng-model="data.type.fastfood">Покупки</md-checkbox>
+                    <md-checkbox ng-model="data.type.shop">Покупки</md-checkbox>
                   </div>
                 </div>
 

@@ -2,7 +2,7 @@
 baseURL = 'http://susanin.ml/api/v1';
 var baseURL_route = 'http://127.0.0.1/api';
 baseURL_route = 'http://192.168.1.64/api';
-baseURL_route = 'http://susanin.ml/api';
+// baseURL_route = 'http://susanin.ml/api';
 var djangoURL = 'http://susanin.ml/api/django';
 var TIMEOUT = 200;
 
@@ -607,12 +607,16 @@ myApp.factory('routeFactory', [
 
     function fetchRoute() {
       var url = baseURL_route + '/get_route/';
+      var d = new Date();
+      var t = d.getTime();
+
       $http.post(url, {
           userLocation: {
             'lat': userLocation[0],
             'lon': userLocation[1]
           },
-          data: initData
+          data: initData,
+          userTime: t
         })
         .then(function(result) {
           set(result.data);
