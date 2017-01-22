@@ -167,3 +167,14 @@ function webgl_support() {
     return false;
   }
 };
+
+function getMapzenKey() {
+  items = ['mapzen-phdCimb',
+    'mapzen-ThZrQcG',
+    'mapzen-gmTTaKs',
+    'mapzen-BHcXLm2',
+    'mapzen-SHRFnGA'
+  ]
+  var item = items[Math.floor(Math.random() * items.length)];
+  return item;
+}

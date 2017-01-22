@@ -124,7 +124,7 @@ function routeToPlace(lat, lon) {
       L.latLng(userLocation[0], userLocation[1]),
       L.latLng(lat, lon)
     ],
-    router: L.Routing.mapzen('mapzen-SHRFnGA', {
+    router: L.Routing.mapzen(getMapzenKey(), {
       costing: 'pedestrian'
     }),
     show: false,
