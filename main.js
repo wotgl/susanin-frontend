@@ -1,9 +1,9 @@
 // var baseURL = 'http://127.0.0.1:12345/api/v1';
-baseURL = 'http://susanin.ml/api/v1';
-var baseURL_route = 'http://127.0.0.1/api';
-baseURL_route = 'http://192.168.1.64/api';
-// baseURL_route = 'http://susanin.ml/api';
-var djangoURL = 'http://susanin.ml/api/django';
+baseURL = 'https://susanin.ml/api/v1';
+// var baseURL_route = 'http://127.0.0.1/api';
+// baseURL_route = 'http://192.168.1.64/api';
+baseURL_route = 'https://susanin.ml/api';
+var djangoURL = 'https://susanin.ml/api/django';
 var TIMEOUT = 200;
 
 var logo = document.getElementById('susanin_logo');
