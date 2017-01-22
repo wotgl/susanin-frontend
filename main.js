@@ -130,8 +130,8 @@ myApp.controller("menuCtrl", [
         }
       }
     }
-    setPlacesContent();
     stopPlaces = $interval(setPlacesContent, TIMEOUT);
+    setPlacesContent();
 
     // Experts here
     function setExpertsContent() {
@@ -149,8 +149,8 @@ myApp.controller("menuCtrl", [
         }
       }
     }
-    setExpertsContent();
     stopExperts = $interval(setExpertsContent, TIMEOUT);
+    setExpertsContent();
 
 
     // Check previous route
@@ -204,8 +204,7 @@ myApp.controller("placeCtrl", [
           }
         }
         $scope.content['tags'] = tags;
-        // console.log(getDistanceFromLatLonInKm(
-        // userLocation[0], userLocation[1], content.lat, content.lon));
+
         if (stop != undefined) {
           $interval.cancel(stop);
           stop = undefined;
@@ -213,8 +212,8 @@ myApp.controller("placeCtrl", [
       }
     }
 
-    setContent();
     var stop = $interval(setContent, TIMEOUT);
+    setContent();
 
   }
 ]);
