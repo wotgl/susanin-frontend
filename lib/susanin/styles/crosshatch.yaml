@@ -57,7 +57,7 @@ styles:
 sources:
     osm:
         type: TopoJSON
-        url:  http://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-JUsa0Gc
+        url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-JUsa0Gc
 
 layers:
     earth:
