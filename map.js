@@ -161,7 +161,7 @@ function routeDirection(places) {
   routeControl = L.Routing.control({
     waypoints: waypoints,
 
-    router: L.Routing.mapzen('mapzen-SHRFnGA', {
+    router: L.Routing.mapzen(getMapzenKey(), {
       costing: 'pedestrian'
     }),
     show: false,

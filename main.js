@@ -1,7 +1,7 @@
 // var baseURL = 'http://127.0.0.1:12345/api/v1';
 baseURL = 'https://susanin.ml/api/v1';
 // var baseURL_route = 'http://127.0.0.1/api';
-// baseURL_route = 'http://192.168.1.64/api';
+// baseURL_route = 'http://192.168.0.113/api';
 baseURL_route = 'https://susanin.ml/api';
 var djangoURL = 'https://susanin.ml/api/django';
 var TIMEOUT = 200;
@@ -652,6 +652,7 @@ myApp.run(['placesFactory', 'expertsFactory', '$http', function(placesFactory, e
     .then(function(result) {});
   placesFactory.init(drawPlaces);
   expertsFactory.init();
+  drawMonuments();
 }]);
 
 // ================Dirictivies================
