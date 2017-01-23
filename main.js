@@ -653,6 +653,7 @@ myApp.run(['placesFactory', 'expertsFactory', '$http', function(placesFactory, e
   placesFactory.init(drawPlaces);
   expertsFactory.init();
   drawMonuments();
+  // drawMetros();
 }]);
 
 // ================Dirictivies================
