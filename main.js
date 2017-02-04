@@ -608,9 +608,9 @@ myApp.factory('routeFactory', [
       initRouteInfo(route);
       logo_route.style.display = "block";
 
-      if (localStorage.getItem('route') == null) {
-        localStorage.setItem('route', JSON.stringify(data));
-      }
+      // if (localStorage.getItem('route') == null) {
+      localStorage.setItem('route', JSON.stringify(data));
+      // }
     }
 
     function get_preview() {
