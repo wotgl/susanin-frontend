@@ -223,3 +223,40 @@ function getMapzenKey() {
   var item = items[Math.floor(Math.random() * items.length)];
   return item;
 }
+
+
+function getDay() {
+  var d = new Date();
+  var weekday = new Array(7);
+  weekday[0] = "su";
+  weekday[1] = "mo";
+  weekday[2] = "tu";
+  weekday[3] = "we";
+  weekday[4] = "th";
+  weekday[5] = "fr";
+  weekday[6] = "sa";
+
+  return weekday[d.getDay()];
+}
+
+function getCurrentHours() {
+  var d = new Date();
+  var h = d.getHours();
+  h = h.toString();
+  if (h.length == 1) {
+    h = '0' + h;
+  }
+
+  return h;
+}
+
+function getCurrentMinutes() {
+  var d = new Date();
+  var m = d.getMinutes();
+  m = m.toString();
+  if (m.length == 1) {
+    m = '0' + m;
+  }
+
+  return m;
+}

@@ -237,3 +237,29 @@ main {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.work_time_status_open {
+    background: #B7BC1C;
+    color: #fff;
+    position: absolute;
+    top: 8px;
+    /*left: 5px;*/
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 11px;
+    line-height: 17px;
+    right: 8px;
+}
+
+.work_time_status_close {
+    background: #ef3d4a;
+    color: #fff;
+    position: absolute;
+    top: 8px;
+    /*left: 5px;*/
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 11px;
+    line-height: 17px;
+    right: 8px; 
+}

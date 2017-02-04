@@ -203,6 +203,45 @@ myApp.controller("placeCtrl", [
         }
         $scope.content['tags'] = tags;
 
+        // work time
+        var day = getDay();
+        var days = JSON.parse($scope.content['workingTime']);
+        var workStatus = {
+          flag: true,
+          text: 'Открыто'
+        };
+
+        if (day in days) {
+          var time = days[day];
+          var startTime = time.split('-')[0];
+          var finishTime = time.split('-')[1];
+          var userTime = getCurrentHours() + ':' + getCurrentMinutes();
+
+          if (userTime > startTime) {
+            // next day
+            if (startTime > finishTime) {
+              workStatus['flag'] = true;
+              workStatus['text'] = 'Открыто';
+            } else {
+              if (userTime < finishTime) {
+                workStatus['flag'] = true;
+                workStatus['text'] = 'Открыто';
+              } else {
+                workStatus['flag'] = false;
+                workStatus = 'Сегодня закрыто';
+              }
+            }
+          } else {
+            var delay = parseInt(startTime.split(':')[0]) - parseInt(userTime.split(':')[0])
+            workStatus['flag'] = false;
+            workStatus['text'] = 'Откроется через ' + delay.toString() + 'ч.';
+          }
+        } else {
+          workStatus['flag'] = false;
+          workStatus['text'] = 'Сегодня закрыто';
+        }
+        $scope.content['workStatus'] = workStatus;
+
         if (stop != undefined) {
           $interval.cancel(stop);
           stop = undefined;

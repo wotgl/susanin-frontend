@@ -22,6 +22,14 @@
               </div>
               <div ng-if="!dataLoading" align="justify">
                 <p>{{content.description}}</p>
+                <p>
+                  <div ng-if="content.workStatus.flag == true" class="work_time_status_open">
+                    {{content.workStatus.text}}
+                  </div>
+                  <div ng-if="content.workStatus.flag == false" class="work_time_status_close">
+                    {{content.workStatus.text}}
+                  </div>
+                </p>
                 <p>Адрес: {{content.address}}</p>
                 <p ng-if='content.work_time !== "-"'>Телефон: {{content.work_time}}</p>
                 <p>Теги: {{content.tags}}</p>
