@@ -662,3 +662,31 @@ myApp.directive('placeItem', function() {
     templateUrl: '/templates/placeItem.html'
   };
 });
+
+
+// d - directive
+myApp.directive('dstartnewroute', [function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      element.bind('click', function() {
+        var start_hidden_btn = document.getElementById('start_new_route');
+        start_hidden_btn.click();
+      });
+    }
+  };
+}]);
+
+
+// d - directive
+myApp.directive('dclearnewroute', [function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      element.bind('click', function() {
+        var start_hidden_btn = document.getElementById('clear_new_route');
+        start_hidden_btn.click();
+      });
+    }
+  };
+}]);

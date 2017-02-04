@@ -73,9 +73,9 @@
                   </md-switch>
                 </div>
                 
-                <div layout="row" layout-align="end" flex>
-                  <md-button ng-click="clearValue()" ng-disabled="!(data.type || data.time)">Очистить</md-button>
-                  <md-button ng-click="save()" class="md-primary">Старт</md-button>
+                <div layout="row" layout-align="end" ng-hide="1" flex>
+                  <md-button ng-click="clearValue()" id="clear_new_route" ng-disabled="!(data.type || data.time)">Очистить</md-button>
+                  <md-button ng-click="save()" id="start_new_route" class="md-primary">Старт</md-button>
                 </div>
               </form>
             </div>
@@ -88,6 +88,12 @@
             </div>
 
           </div>
+          </div>
+        </md-content>
+        <md-content>
+          <div layout="row" layout-align="end" flex>
+            <md-button ng-click="clearValue()" dclearnewroute>Очистить</md-button>
+            <md-button class="md-primary" dstartnewroute>Старт</md-button>
           </div>
         </md-content>
       </md-tab>
