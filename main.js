@@ -607,6 +607,10 @@ myApp.factory('routeFactory', [
       route = sortRouteByDistance(data);
       initRouteInfo(route);
       logo_route.style.display = "block";
+
+      if (localStorage.getItem('route') == null) {
+        localStorage.setItem('route', JSON.stringify(data));
+      }
     }
 
     function get_preview() {
@@ -620,6 +624,7 @@ myApp.factory('routeFactory', [
     function del() {
       route = {};
       deleteRouteDirection();
+      localStorage.removeItem('route');
     }
 
     function sortRouteByDistance(input_route) {
@@ -685,8 +690,14 @@ myApp.factory('routeFactory', [
 
 
 // ================Init================
-myApp.run(['placesFactory', 'expertsFactory', '$http', function(placesFactory, expertsFactory, $http) {
+myApp.run(['routeFactory', 'placesFactory', 'expertsFactory', '$http', '$location', function(routeFactory, placesFactory, expertsFactory, $http, $location) {
   var url = baseURL_route + '/init/';
+
+  if (localStorage.getItem('route') != null) {
+    routeFactory.set(JSON.parse(localStorage.getItem('route')));
+    $location.path('/menu/');
+  }
+
   $http.post(url)
     .then(function(result) {});
   placesFactory.init(drawPlaces);
