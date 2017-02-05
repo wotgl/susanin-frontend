@@ -60,7 +60,7 @@ function init() {
   ]
   userLocation = _locations[Math.floor(Math.random() * _locations.length)];
   console.log(userLocation);
-  addUserMarker(userLocation[0], userLocation[1]);
+  addUserMarker(userLocation[0], userLocation[1], true);
 
   // Boundary of map
   map.setMaxBounds([
@@ -83,9 +83,9 @@ function init() {
         // in SPb
         if (position.coords.latitude > spb_locations[0] && position.coords.latitude < spb_locations[2] && position.coords.longitude > spb_locations[1] && position.coords.longitude < spb_locations[3]) {
 
-          addUserMarker(position.coords.latitude, position.coords.longitude);
+          addUserMarker(position.coords.latitude, position.coords.longitude, false);
           navigator.geolocation.watchPosition(function(position) {
-            addUserMarker(position.coords.latitude, position.coords.longitude);
+            addUserMarker(position.coords.latitude, position.coords.longitude, false);
           });
         } else {
           notSaintPeterburg();
@@ -110,6 +110,7 @@ function showPlace(lat, lon) {
 function deleteMarkers() {
   if (routeControl) {
     map.removeControl(routeControl);
+    routeControl = undefined;
   }
   if (placeMarker) {
     placeMarker.removeFrom(map);
@@ -202,7 +203,7 @@ function addPlaceMarker(lat, lon) {
   placeMarker.addTo(map);
 }
 
-function addUserMarker(lat, lon) {
+function addUserMarker(lat, lon, draggable) {
   if (userMarker) {
     userMarker.removeFrom(map);
   }
@@ -211,12 +212,43 @@ function addUserMarker(lat, lon) {
 
     iconSize: [30, 41], // size of the icon
     iconAnchor: [30, 41], // point of the icon which will correspond to marker's location
-    popupAnchor: [-15, -41] // point from which the popup should open relative to the iconAnchor
+    popupAnchor: [-15, -41], // point from which the popup should open relative to the iconAnchor,
   });
 
   userMarker = L.marker([lat, lon], {
-    icon: userIcon
+    icon: userIcon,
+    draggable: draggable,
   });
+
+  if (draggable) {
+    userMarker.on('dragend', function(e) {
+      userLocation[0] = e.target._latlng.lat;
+      userLocation[1] = e.target._latlng.lng;
+      console.log(e.target._latlng);
+      if (routeControl) {
+        console.log('bbb');
+        var waypoints = routeControl.getWaypoints();
+        var userWaypoint = waypoints[0];
+        userWaypoint.latLng.lat = userLocation[0];
+        userWaypoint.latLng.lng = userLocation[1];
+        waypoints[0] = userWaypoint;
+        routeControl.setWaypoints(waypoints);
+
+        function test(a, b, c) {
+          if (b && b.status == 400) {
+            alert('Маршрут не может быть построен. Переместите Сусанина в другое место!');
+          }
+        }
+        routeControl.getRouter().route(routeControl.getWaypoints(), {
+          call: test
+        });
+        // var app = document.getElementById('app');
+        // angular.element(app).injector().get('routeFactory').updateDistance();
+      }
+      console.log('AAA');
+
+    });
+  }
 
   userMarker.addTo(map);
 }

@@ -108,6 +108,7 @@ myApp.controller("menuCtrl", [
       $scope.previousRoute = false;
       logo_route.style.display = "none";
       routeFactory.del();
+      userMarker.dragging.enable();
     };
 
     $scope.startNewRouteFromDirection = function() {
@@ -234,7 +235,11 @@ myApp.controller("placeCtrl", [
           } else {
             var delay = parseInt(startTime.split(':')[0]) - parseInt(userTime.split(':')[0])
             workStatus['flag'] = false;
-            workStatus['text'] = 'Откроется через ' + delay.toString() + 'ч.';
+            if (delay == 0) {
+              workStatus['text'] = 'Откроется в течении часа';
+            } else {
+              workStatus['text'] = 'Откроется через ' + delay.toString() + 'ч.';
+            }
           }
         } else {
           workStatus['flag'] = false;
@@ -593,6 +598,7 @@ myApp.factory('routeFactory', [
     var route = {};
     var routePreview = {};
     var routeInfo = {};
+    var tmpData = {};
 
     function init(data) {
       initData = data;
@@ -603,7 +609,13 @@ myApp.factory('routeFactory', [
       return route;
     }
 
+    function updateDistance() {
+      // set(tmpData);
+    }
+
     function set(data) {
+      console.log(userMarker);
+      userMarker.dragging.disable();
       route = sortRouteByDistance(data);
       initRouteInfo(route);
       logo_route.style.display = "block";
@@ -684,6 +696,7 @@ myApp.factory('routeFactory', [
       set: set,
       get_preview: get_preview,
       set_preview: set_preview,
+      updateDistance: updateDistance,
     }
   }
 ]);
