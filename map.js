@@ -224,9 +224,8 @@ function addUserMarker(lat, lon, draggable) {
     userMarker.on('dragend', function(e) {
       userLocation[0] = e.target._latlng.lat;
       userLocation[1] = e.target._latlng.lng;
-      console.log(e.target._latlng);
+      // console.log(e.target._latlng);
       if (routeControl) {
-        console.log('bbb');
         var waypoints = routeControl.getWaypoints();
         var userWaypoint = waypoints[0];
         userWaypoint.latLng.lat = userLocation[0];
@@ -245,7 +244,6 @@ function addUserMarker(lat, lon, draggable) {
         // var app = document.getElementById('app');
         // angular.element(app).injector().get('routeFactory').updateDistance();
       }
-      console.log('AAA');
 
     });
   }

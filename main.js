@@ -369,6 +369,16 @@ myApp.controller("routeCtrl", [
         })
         .then(function(result) {});
 
+      // close route
+      if ($scope.content.length == 0) {
+        logo_route.style.display = "none";
+        routeFactory.del();
+        userMarker.dragging.enable();
+        $location.path('/');
+
+        return;
+      }
+
       // update direction
       routeFactory.set($scope.content);
       $scope.content = routeFactory.get();
@@ -385,6 +395,16 @@ myApp.controller("routeCtrl", [
         }
       }
       $scope.content.splice(delIndex, 1);
+
+      // close route
+      if ($scope.content.length == 0) {
+        logo_route.style.display = "none";
+        routeFactory.del();
+        userMarker.dragging.enable();
+        $location.path('/');
+
+        return;
+      }
 
       // update direction
       routeFactory.set($scope.content);
