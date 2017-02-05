@@ -450,6 +450,11 @@ myApp.controller("routeCtrl", [
         $scope.infoLoading = false;
         $scope.info = getRouteLine().summary;
         $scope.info['places'] = routeFactory.get();
+        var totalDistance = 0;
+        for (i = 0; i < $scope.info['places'].length; i++) {
+          totalDistance += $scope.info['places'][i]['distance'];
+        }
+        $scope.info['totalDistance'] = totalDistance;
         var tmp = ($scope.info.totalTime + ($scope.info.places.length * 2700)) / 3600;
         $scope.info['_totalTime'] = tmp.toFixed(1);
 

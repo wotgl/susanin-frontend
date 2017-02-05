@@ -40,7 +40,7 @@
                   </div>
                   <div ng-if="!infoLoading">
                     <p>Количество мест: {{info.places.length}}</p>
-                    <p>Расстояние: {{info.totalDistance}} км</p>
+                    <p>Расстояние: {{(info.totalDistance|number:1)}} км</p>
                     <p>Время: ~{{info._totalTime}} ч</p>
                     <div layout="row" layout-align="center center" layout-wrap>
                       <md-button class="md-warn" style="color: #ee8208;" ng-click="showRouteOnMap()">
