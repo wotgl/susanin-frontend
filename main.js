@@ -424,7 +424,7 @@ myApp.controller("routeCtrl", [
 
     function setInfo() {
       var routeLine = getRouteLine();
-      if (routeLine != undefined) {
+      if (routeLine != undefined && Object.keys(routeFactory.get()).length) {
         console.log('routeCtrl:setInfo');
 
         $scope.infoLoading = false;
@@ -614,7 +614,6 @@ myApp.factory('routeFactory', [
     }
 
     function set(data) {
-      console.log(userMarker);
       userMarker.dragging.disable();
       route = sortRouteByDistance(data);
       initRouteInfo(route);
