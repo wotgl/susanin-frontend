@@ -1,13 +1,25 @@
-﻿# Author @patriciogv - 2015
+# Author @patriciogv - 2015
 
 cameras:
     camera1:
         type: isometric
 
+lights:
+    light1:
+        type: directional
+        direction: [0, 1, -.5]
+        diffuse: .5
+        ambient: .3
+    light2:
+        type: point
+        position: [0, -500px, 500px]
+        origin: ground
+        diffuse: .5
+        ambient: .3
 
 scene:
     background:
-        color: '#242c31'
+        color: '#30383a'
 
 styles:
     tiling-texture-zoom-fade:
@@ -55,10 +67,10 @@ layers:
         #         order: 1
         #         color: '#20282b'
         #         width: 8
-        # draw:
-        #     polygons:
-        #         order: 0
-        #         color: '#242c31'
+        draw:
+            polygons:
+                order: 0
+                color: '#242c31'
     # landuse:
     #     data: { source: osm }
     #     draw:

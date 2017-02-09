@@ -23,8 +23,16 @@ function createCircle(text, color) {
     context.lineWidth = 1;
     context.fillStyle = "#ffffff";
     context.lineStyle = "#ffffff";
-    context.font = "12px sans-serif";
-    context.fillText(text, x - 5, y + 5);
+    context.font = "bold 12px sans-serif";
+    var delta_1_x = 3.2;
+    var delta_1_y = 4;
+    var delta_2_x = 6.7;
+    var delta_2_y = 4;
+    if (text.toString().length == 1) {
+      context.fillText(text, x - delta_1_x, y + delta_1_y);
+    } else {
+      context.fillText(text, x - delta_2_x, y + delta_2_y);
+    }
   }
 
   function animate(color) {
