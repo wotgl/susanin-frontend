@@ -171,7 +171,6 @@ function drawMetros() {
         // img.bindTooltip('kek');
 
         var height = 0.0004;
-        // var latlng = L.latLng(data[i]['lat'] + height, data[i]['lon'] + height);
         img.bindPopup(data[i]['name']);
 
         img.on('click', function(e) {

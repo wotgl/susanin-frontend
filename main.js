@@ -236,7 +236,7 @@ myApp.controller("placeCtrl", [
             var delay = parseInt(startTime.split(':')[0]) - parseInt(userTime.split(':')[0])
             workStatus['flag'] = false;
             if (delay == 0) {
-              workStatus['text'] = 'Откроется в течении часа';
+              workStatus['text'] = 'Откроется в течение часа';
             } else {
               workStatus['text'] = 'Откроется через ' + delay.toString() + 'ч.';
             }
