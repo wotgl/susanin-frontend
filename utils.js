@@ -164,11 +164,47 @@ function drawMetros() {
           [data[i]['lat'] + data[i]['height'], data[i]['lon'] + data[i]['height'] + 0.0007]
         ];
 
-        L.imageOverlay(imageUrl, imageBounds).addTo(map);
+        var img = L.imageOverlay(imageUrl, imageBounds, {
+          interactive: true
+        })
+        img.addTo(map);
+        // img.bindTooltip('kek');
+
+        var height = 0.0004;
+        // var latlng = L.latLng(data[i]['lat'] + height, data[i]['lon'] + height);
+        img.bindPopup(data[i]['name']);
+
+        img.on('click', function(e) {
+          var latlng = L.latLng(e.latlng.lat + height, e.latlng.lng);
+          // console.log(e);
+          this.openPopup(latlng);
+
+          var self = this;
+
+          function close() {
+            self.closePopup();
+          }
+          setTimeout(close, 2000);
+        });
+
+
+        // var textLatLng = [data[i]['lat'], data[i]['lon']];
+        // var myTextLabel = L.marker(textLatLng, {
+        //   icon: L.divIcon({
+        //     className: 'text-labels', // Set class for CSS styling
+        //     html: '<p>' + data[i]['name'].replace(' ', '&nbsp;') + '</p>'
+        //   }),
+        //   draggable: false, // Allow label dragging...?
+        //   zIndexOffset: 1000 // Make appear above other map features
+        // });
+
+        // map.addLayer(myTextLabel);
+
       }
     },
   });
 }
+
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km

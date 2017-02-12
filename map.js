@@ -21,7 +21,7 @@ var map = L.map(
   });
 map.zoomControl.setPosition('topleft');
 var layer = Tangram.leafletLayer({
-  scene: "lib/susanin/styles/crosshatch.yaml",
+  scene: "lib/susanin/styles/crosshatch2.yaml",
 });
 layer.addTo(map);
 
@@ -129,6 +129,7 @@ function routeToPlace(lat, lon) {
       costing: 'pedestrian'
     }),
     show: false,
+    addWaypoints: false,
     language: 'ru',
     routeWhileDragging: true,
     createMarker: function(i, waypoint, n) {
@@ -161,7 +162,7 @@ function routeDirection(places) {
 
   routeControl = L.Routing.control({
     waypoints: waypoints,
-
+    addWaypoints: false,
     router: L.Routing.mapzen(getMapzenKey(), {
       costing: 'pedestrian'
     }),

@@ -263,3 +263,9 @@ main {
     line-height: 17px;
     right: 8px; 
 }
+
+.text-labels {
+    font-size: 12px;
+    color: white;
+    /* Use color, background, set margins for offset, etc */
+}

@@ -62,15 +62,12 @@ sources:
 layers:
     earth:
         data: { source: osm }
-        # draw:
-        #     paper:
-        #         order: 1
-        #         color: '#20282b'
-        #         width: 8
         draw:
-            polygons:
-                order: 0
-                color: '#242c31'
+            paper:
+                order: 1
+                color: '#20282b'
+                # color: '#242c31'
+                width: 8
     # landuse:
     #     data: { source: osm }
     #     draw:
@@ -80,13 +77,10 @@ layers:
     #             width: 8
     water:
         data: { source: osm }
-        # draw:
-        #     paper:
-        #         order: 2
-        #         color: '#979a9c'
         draw:
-            polygons:
-                order: 1
+            paper:
+                order: 2
+                # color: '#979a9c'
                 color: '#cbcfd1'
     roads:
         data: { source: osm }

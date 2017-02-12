@@ -740,7 +740,7 @@ myApp.run(['routeFactory', 'placesFactory', 'expertsFactory', '$http', '$locatio
   placesFactory.init(drawPlaces);
   expertsFactory.init();
   drawMonuments();
-  // drawMetros();
+  drawMetros();
 }]);
 
 // ================Dirictivies================
