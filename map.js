@@ -85,7 +85,7 @@ function init() {
 
           addUserMarker(position.coords.latitude, position.coords.longitude, false);
           navigator.geolocation.watchPosition(function(position) {
-            addUserMarker(position.coords.latitude, position.coords.longitude, false);
+            updateUser(position.coords.latitude, position.coords.longitude);
           });
         } else {
           notSaintPeterburg();
@@ -204,9 +204,9 @@ function addPlaceMarker(lat, lon) {
   placeMarker.addTo(map);
 }
 
-function updateUser(e) {
-  userLocation[0] = e.target._latlng.lat;
-  userLocation[1] = e.target._latlng.lng;
+function updateUser(newLat, newLon) {
+  userLocation[0] = newLat;
+  userLocation[1] = newLon;
   // console.log(e.target._latlng);
   if (routeControl) {
     var waypoints = routeControl.getWaypoints();
@@ -253,7 +253,7 @@ function addUserMarker(lat, lon, draggable) {
 
   if (draggable) {
     userMarker.on('dragend', function(e) {
-      updateUser(e);
+      updateUser(e.target._latlng.lat, e.target._latlng.lng);
     });
   }
 
