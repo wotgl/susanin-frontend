@@ -463,6 +463,43 @@ myApp.controller("routeCtrl", [
           stopInfo = undefined;
         }
       }
+
+      $scope.updateDistance();
+    }
+
+    $scope.updateDistance = function() {
+
+      // Очень костыльная херня
+      function foo() {
+        var routeLine = getRouteLine();
+        if (routeLine != undefined) {
+          var totalDistance = 0;
+          for (i = 0; i < $scope.info['places'].length; i++) {
+            // console.log($scope.info['places'][i]);
+            $scope.info['places'][i]['distance'] = getDistanceFromLatLonInKm(userLocation[0], userLocation[1], $scope.info['places'][i]['lat'], $scope.info['places'][i]['lon']);
+            totalDistance += $scope.info['places'][i]['distance'];
+          }
+          $scope.info['totalDistance'] = totalDistance;
+
+          var tmp = (getRouteLine().summary.totalTime + ($scope.info['places'].length * 2700)) / 3600;
+          $scope.info['_totalTime'] = tmp.toFixed(1);
+
+
+          if (_stop != undefined) {
+            $interval.cancel(_stop);
+            _stop = undefined;
+            try {
+              $scope.$digest();
+            } catch (e) {
+
+            }
+
+          }
+        }
+      }
+
+      var _stop = $interval(foo, TIMEOUT);
+      foo();
     }
 
     var stop = $interval(setContent, TIMEOUT);
@@ -639,7 +676,7 @@ myApp.factory('routeFactory', [
     }
 
     function set(data) {
-      userMarker.dragging.disable();
+      // userMarker.dragging.disable();
       route = sortRouteByDistance(data);
       initRouteInfo(route);
       logo_route.style.display = "block";

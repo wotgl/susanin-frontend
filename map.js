@@ -204,6 +204,36 @@ function addPlaceMarker(lat, lon) {
   placeMarker.addTo(map);
 }
 
+function updateUser(e) {
+  userLocation[0] = e.target._latlng.lat;
+  userLocation[1] = e.target._latlng.lng;
+  // console.log(e.target._latlng);
+  if (routeControl) {
+    var waypoints = routeControl.getWaypoints();
+    var userWaypoint = waypoints[0];
+    userWaypoint.latLng.lat = userLocation[0];
+    userWaypoint.latLng.lng = userLocation[1];
+    waypoints[0] = userWaypoint;
+    routeControl.setWaypoints(waypoints);
+
+    function test(a, b, c) {
+      if (b && b.status == 400) {
+        alert('Маршрут не может быть построен. Переместите Сусанина в другое место!');
+      }
+    }
+    routeControl.getRouter().route(routeControl.getWaypoints(), {
+      call: test
+    });
+    routeLine = undefined;
+
+    if (location.hash == "#/route/view") {
+      angular.element(document.getElementById('kek')).scope().updateDistance();
+    }
+    // var app = document.getElementById('app');
+    // angular.element(app).injector().get('routeFactory').updateDistance();
+  }
+}
+
 function addUserMarker(lat, lon, draggable) {
   if (userMarker) {
     userMarker.removeFrom(map);
@@ -223,29 +253,7 @@ function addUserMarker(lat, lon, draggable) {
 
   if (draggable) {
     userMarker.on('dragend', function(e) {
-      userLocation[0] = e.target._latlng.lat;
-      userLocation[1] = e.target._latlng.lng;
-      // console.log(e.target._latlng);
-      if (routeControl) {
-        var waypoints = routeControl.getWaypoints();
-        var userWaypoint = waypoints[0];
-        userWaypoint.latLng.lat = userLocation[0];
-        userWaypoint.latLng.lng = userLocation[1];
-        waypoints[0] = userWaypoint;
-        routeControl.setWaypoints(waypoints);
-
-        function test(a, b, c) {
-          if (b && b.status == 400) {
-            alert('Маршрут не может быть построен. Переместите Сусанина в другое место!');
-          }
-        }
-        routeControl.getRouter().route(routeControl.getWaypoints(), {
-          call: test
-        });
-        // var app = document.getElementById('app');
-        // angular.element(app).injector().get('routeFactory').updateDistance();
-      }
-
+      updateUser(e);
     });
   }
 
