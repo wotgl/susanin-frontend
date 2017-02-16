@@ -350,7 +350,7 @@ myApp.controller("routeCtrl", [
 
     $scope.showRouteOnMap = function() {
       $location.path('/');
-      routeFactory.set($scope.content);
+      routeFactory.set($scope.content, routeFactory.getNightMode());
       map.setZoom(MIN_ZOOM + 2);
     }
 
@@ -380,7 +380,7 @@ myApp.controller("routeCtrl", [
       }
 
       // update direction
-      routeFactory.set($scope.content);
+      routeFactory.set($scope.content, routeFactory.getNightMode());
       $scope.content = routeFactory.get();
       checkStopInfo();
       stopInfo = $interval(setInfo, TIMEOUT);
@@ -407,7 +407,7 @@ myApp.controller("routeCtrl", [
       }
 
       // update direction
-      routeFactory.set($scope.content);
+      routeFactory.set($scope.content, routeFactory.getNightMode());
       $scope.content = routeFactory.get();
       checkStopInfo();
       stopInfo = $interval(setInfo, TIMEOUT);
@@ -447,6 +447,9 @@ myApp.controller("routeCtrl", [
       if (routeLine != undefined && Object.keys(routeFactory.get()).length) {
         console.log('routeCtrl:setInfo');
 
+        $scope.nightMode = routeFactory.getNightMode();
+        console.log($scope.nightMode);
+
         $scope.infoLoading = false;
         $scope.info = getRouteLine().summary;
         $scope.info['places'] = routeFactory.get();
@@ -472,7 +475,7 @@ myApp.controller("routeCtrl", [
       // Очень костыльная херня
       function foo() {
         var routeLine = getRouteLine();
-        if (routeLine != undefined) {
+        if (routeLine != undefined && $scope.info != undefined) {
           var totalDistance = 0;
           for (i = 0; i < $scope.info['places'].length; i++) {
             // console.log($scope.info['places'][i]);
@@ -661,6 +664,7 @@ myApp.factory('routeFactory', [
     var routePreview = {};
     var routeInfo = {};
     var tmpData = {};
+    var nightMode = false;
 
     function init(data) {
       initData = data;
@@ -671,12 +675,17 @@ myApp.factory('routeFactory', [
       return route;
     }
 
+    function getNightMode() {
+      return nightMode;
+    }
+
     function updateDistance() {
       // set(tmpData);
     }
 
-    function set(data) {
+    function set(data, _nightMode = false) {
       // userMarker.dragging.disable();
+      nightMode = _nightMode;
       route = sortRouteByDistance(data);
       initRouteInfo(route);
       logo_route.style.display = "block";
@@ -746,7 +755,7 @@ myApp.factory('routeFactory', [
           userTime: t
         })
         .then(function(result) {
-          set(result.data['route']);
+          set(result.data['route'], result.data['night']);
         });
     }
 
@@ -758,6 +767,7 @@ myApp.factory('routeFactory', [
       get_preview: get_preview,
       set_preview: set_preview,
       updateDistance: updateDistance,
+      getNightMode: getNightMode,
     }
   }
 ]);

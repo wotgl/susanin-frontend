@@ -25,6 +25,20 @@
         <!-- Info -->
         <md-list-item class="md-2-line" ng-hide="userChoice">
           <div class="md-list-item-text" layout="column">
+
+            <md-card md-theme-watch ng-if="nightMode">
+              <md-card-content style="text-align: center; background-color: #142634; color: white;">
+                <span class="md-subhead">
+                  <div ng-if="infoLoading">
+                    Загрузка...
+                  </div>
+                  <div ng-if="!infoLoading">
+                    Ночной <i class="material-icons">brightness_3</i>
+                  </div>
+                </span>
+              </md-card-content>
+            </md-card>
+
             <md-card md-theme-watch>
               <md-card-title>
                 <md-card-title-text style="display: inline;">
