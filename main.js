@@ -746,7 +746,7 @@ myApp.factory('routeFactory', [
           userTime: t
         })
         .then(function(result) {
-          set(result.data);
+          set(result.data['route']);
         });
     }
 
