@@ -257,11 +257,20 @@ function webgl_support() {
 };
 
 function getMapzenKey() {
-  items = ['mapzen-phdCimb',
+  items = [
+    'mapzen-phdCimb',
     'mapzen-ThZrQcG',
     'mapzen-gmTTaKs',
     'mapzen-BHcXLm2',
-    'mapzen-SHRFnGA'
+    'mapzen-SHRFnGA',
+    'mapzen-UGpynNy',
+    'mapzen-T7cQrLT',
+    'mapzen-Lx8FyTg',
+    'mapzen-YTUhVos',
+    'mapzen-g1D9psU',
+    'mapzen-7uCaHo8',
+    'mapzen-3zTdN3g',
+    'mapzen-BWG42GQ',
   ]
   var item = items[Math.floor(Math.random() * items.length)];
   return item;

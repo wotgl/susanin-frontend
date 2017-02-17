@@ -162,17 +162,19 @@ function routeDirection(places) {
 
   routeControl = L.Routing.control({
     waypoints: waypoints,
-    addWaypoints: false,
     router: L.Routing.mapzen(getMapzenKey(), {
       costing: 'pedestrian'
     }),
     show: false,
+    addWaypoints: false,
     language: 'ru',
     routeWhileDragging: true,
     routeLine: function(route) {
       routeLine = route;
 
-      var line = L.Routing.line(route);
+      var line = L.Routing.line(route, {
+        addWaypoints: false
+      });
       return line;
     },
     createMarker: function(i, waypoint, n) {
