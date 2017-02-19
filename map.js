@@ -21,7 +21,7 @@ var map = L.map(
   });
 map.zoomControl.setPosition('topleft');
 var layer = Tangram.leafletLayer({
-  scene: "lib/susanin/styles/crosshatch2.yaml",
+  scene: "lib/susanin/styles/crosshatch.yaml",
 });
 layer.addTo(map);
 

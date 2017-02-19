@@ -129,12 +129,12 @@ function drawPlaces(places) {
 function drawMonuments() {
   $.ajax({
     type: "POST",
-    url: 'https://susanin.ml/api/v1/static_places/',
+    url: 'https://okeysusanin.com/api/v1/static_places/',
     data: '{"type":"monument"}',
     success: function(data) {
       data = JSON.parse(data)['data'];
       for (i = 0; i < data.length; i++) {
-        var imageUrl = 'https://susanin.ml' + data[i]['image'];
+        var imageUrl = 'https://okeysusanin.com' + data[i]['image'];
 
         // Перепутал высоту и ширину
         imageBounds = [
@@ -151,12 +151,12 @@ function drawMonuments() {
 function drawMetros() {
   $.ajax({
     type: "POST",
-    url: 'https://susanin.ml/api/v1/static_places/',
+    url: 'https://okeysusanin.com/api/v1/static_places/',
     data: '{"type":"metro"}',
     success: function(data) {
       data = JSON.parse(data)['data'];
       for (i = 0; i < data.length; i++) {
-        var imageUrl = 'https://susanin.ml' + data[i]['image'];
+        var imageUrl = 'https://okeysusanin.com' + data[i]['image'];
 
         // Перепутал высоту и ширину
         imageBounds = [
