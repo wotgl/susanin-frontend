@@ -269,3 +269,19 @@ main {
     color: white;
     /* Use color, background, set margins for offset, etc */
 }
+
+.rounded-content {
+    border-radius: 10px;
+}
+
+.rounded-content-top {
+    border-radius: 10px 10px 0 0; 
+}
+
+.rounded-content-bottom {
+    border-radius: 0 0 10px 10px; 
+}
+
+md-toolbar {
+    background-color: transparent !important;
+}
