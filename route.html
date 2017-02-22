@@ -119,7 +119,7 @@
                   </md-button>
                 </div>
 
-                <div>
+                <div ng-controller="placeCtrl">
                   <md-button class="md-icon-button md-accent control-button" aria-label="Settings" ng-click="routeToPlace(item.lat, item.lon)">
                     <md-icon md-font-library="material-icons" class="control-button-icon">directions</md-icon>
                   </md-button>
@@ -139,5 +139,4 @@
   <md-card-actions layout="row" layout-align="end center" ng-show="userChoice">
     <md-button ng-click="setRoute()">Иду!</md-button>
   </md-card-actions>
-  <div ng-controller="placeCtrl"></div>
 </md-content>
